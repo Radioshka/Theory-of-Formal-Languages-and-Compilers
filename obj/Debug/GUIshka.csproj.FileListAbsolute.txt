@@ -1,0 +1,10 @@
+C:\Users\User.DESKTOP-Q2FT676\source\repos\GUIshka\bin\Debug\GUIshka.exe.config
+C:\Users\User.DESKTOP-Q2FT676\source\repos\GUIshka\bin\Debug\GUIshka.exe
+C:\Users\User.DESKTOP-Q2FT676\source\repos\GUIshka\bin\Debug\GUIshka.pdb
+C:\Users\User.DESKTOP-Q2FT676\source\repos\GUIshka\obj\Debug\GUIshka.csprojAssemblyReference.cache
+C:\Users\User.DESKTOP-Q2FT676\source\repos\GUIshka\obj\Debug\GUIshka.MainForm.resources
+C:\Users\User.DESKTOP-Q2FT676\source\repos\GUIshka\obj\Debug\GUIshka.Properties.Resources.resources
+C:\Users\User.DESKTOP-Q2FT676\source\repos\GUIshka\obj\Debug\GUIshka.csproj.GenerateResource.cache
+C:\Users\User.DESKTOP-Q2FT676\source\repos\GUIshka\obj\Debug\GUIshka.csproj.CoreCompileInputs.cache
+C:\Users\User.DESKTOP-Q2FT676\source\repos\GUIshka\obj\Debug\GUIshka.exe
+C:\Users\User.DESKTOP-Q2FT676\source\repos\GUIshka\obj\Debug\GUIshka.pdb
