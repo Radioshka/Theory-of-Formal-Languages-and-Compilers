@@ -97,7 +97,6 @@
             this.CreateButton.Size = new System.Drawing.Size(55, 55);
             this.CreateButton.TabIndex = 2;
             this.CreateButton.UseVisualStyleBackColor = true;
-            this.CreateButton.Click += new System.EventHandler(this.CreateButton_Click);
             // 
             // OpenButton
             // 
@@ -459,4 +458,5 @@
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
     }
 }
+
 
