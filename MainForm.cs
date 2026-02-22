@@ -22,14 +22,10 @@ namespace GUIshka
 
         }
 
-        private void CreateButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void ОткрытьToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
     }
 }
+
