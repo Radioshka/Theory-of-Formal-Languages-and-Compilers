@@ -1,4 +1,4 @@
-﻿namespace GUIshka
+namespace GUIshka
 {
     partial class MainForm
     {
@@ -6,6 +6,7 @@
         /// Обязательная переменная конструктора.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+
 
         /// <summary>
         /// Освободить все используемые ресурсы.
@@ -22,6 +23,7 @@
 
         #region Код, автоматически созданный конструктором форм Windows
 
+
         /// <summary>
         /// Требуемый метод для поддержки конструктора — не изменяйте 
         /// содержимое этого метода с помощью редактора кода.
@@ -31,17 +33,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.CreateButton = new System.Windows.Forms.Button();
-            this.OpenButton = new System.Windows.Forms.Button();
-            this.SaveButton = new System.Windows.Forms.Button();
-            this.BackButton = new System.Windows.Forms.Button();
-            this.ForwardButton = new System.Windows.Forms.Button();
-            this.CopyButton = new System.Windows.Forms.Button();
-            this.CutButton = new System.Windows.Forms.Button();
-            this.InputButton = new System.Windows.Forms.Button();
-            this.AnalisButton = new System.Windows.Forms.Button();
-            this.RefButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.создатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,135 +59,46 @@
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.вызовСправкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.CreateButton = new System.Windows.Forms.Button();
+            this.OpenButton = new System.Windows.Forms.Button();
+            this.SaveButton = new System.Windows.Forms.Button();
+            this.BackButton = new System.Windows.Forms.Button();
+            this.ForwardButton = new System.Windows.Forms.Button();
+            this.CopyButton = new System.Windows.Forms.Button();
+            this.CutButton = new System.Windows.Forms.Button();
+            this.InputButton = new System.Windows.Forms.Button();
+            this.AnalisButton = new System.Windows.Forms.Button();
+            this.RefButton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            this.toolStripPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 327);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 323);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(991, 171);
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.Size = new System.Drawing.Size(991, 172);
             this.dataGridView1.TabIndex = 0;
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(12, 91);
+            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBox1.Location = new System.Drawing.Point(12, 100);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(991, 228);
+            this.richTextBox1.Size = new System.Drawing.Size(991, 217);
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = "";
-            // 
-            // CreateButton
-            // 
-            this.CreateButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("CreateButton.BackgroundImage")));
-            this.CreateButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.CreateButton.Location = new System.Drawing.Point(12, 27);
-            this.CreateButton.Name = "CreateButton";
-            this.CreateButton.Size = new System.Drawing.Size(55, 55);
-            this.CreateButton.TabIndex = 2;
-            this.CreateButton.UseVisualStyleBackColor = true;
-            // 
-            // OpenButton
-            // 
-            this.OpenButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("OpenButton.BackgroundImage")));
-            this.OpenButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.OpenButton.Location = new System.Drawing.Point(73, 27);
-            this.OpenButton.Name = "OpenButton";
-            this.OpenButton.Size = new System.Drawing.Size(55, 55);
-            this.OpenButton.TabIndex = 3;
-            this.OpenButton.UseVisualStyleBackColor = true;
-            // 
-            // SaveButton
-            // 
-            this.SaveButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("SaveButton.BackgroundImage")));
-            this.SaveButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.SaveButton.Location = new System.Drawing.Point(134, 27);
-            this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(55, 55);
-            this.SaveButton.TabIndex = 4;
-            this.SaveButton.UseVisualStyleBackColor = true;
-            // 
-            // BackButton
-            // 
-            this.BackButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BackButton.BackgroundImage")));
-            this.BackButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BackButton.Location = new System.Drawing.Point(290, 30);
-            this.BackButton.Name = "BackButton";
-            this.BackButton.Size = new System.Drawing.Size(55, 55);
-            this.BackButton.TabIndex = 5;
-            this.BackButton.UseVisualStyleBackColor = true;
-            // 
-            // ForwardButton
-            // 
-            this.ForwardButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ForwardButton.BackgroundImage")));
-            this.ForwardButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ForwardButton.Location = new System.Drawing.Point(372, 30);
-            this.ForwardButton.Name = "ForwardButton";
-            this.ForwardButton.Size = new System.Drawing.Size(55, 55);
-            this.ForwardButton.TabIndex = 6;
-            this.ForwardButton.UseVisualStyleBackColor = true;
-            // 
-            // CopyButton
-            // 
-            this.CopyButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("CopyButton.BackgroundImage")));
-            this.CopyButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.CopyButton.Location = new System.Drawing.Point(454, 30);
-            this.CopyButton.Name = "CopyButton";
-            this.CopyButton.Size = new System.Drawing.Size(55, 55);
-            this.CopyButton.TabIndex = 7;
-            this.CopyButton.UseVisualStyleBackColor = true;
-            // 
-            // CutButton
-            // 
-            this.CutButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("CutButton.BackgroundImage")));
-            this.CutButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.CutButton.Location = new System.Drawing.Point(536, 30);
-            this.CutButton.Name = "CutButton";
-            this.CutButton.Size = new System.Drawing.Size(55, 55);
-            this.CutButton.TabIndex = 8;
-            this.CutButton.UseVisualStyleBackColor = true;
-            // 
-            // InputButton
-            // 
-            this.InputButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("InputButton.BackgroundImage")));
-            this.InputButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.InputButton.Location = new System.Drawing.Point(618, 30);
-            this.InputButton.Name = "InputButton";
-            this.InputButton.Size = new System.Drawing.Size(55, 55);
-            this.InputButton.TabIndex = 9;
-            this.InputButton.UseVisualStyleBackColor = true;
-            // 
-            // AnalisButton
-            // 
-            this.AnalisButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("AnalisButton.BackgroundImage")));
-            this.AnalisButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.AnalisButton.Location = new System.Drawing.Point(701, 30);
-            this.AnalisButton.Name = "AnalisButton";
-            this.AnalisButton.Size = new System.Drawing.Size(55, 55);
-            this.AnalisButton.TabIndex = 10;
-            this.AnalisButton.UseVisualStyleBackColor = true;
-            // 
-            // RefButton
-            // 
-            this.RefButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("RefButton.BackgroundImage")));
-            this.RefButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.RefButton.Location = new System.Drawing.Point(783, 30);
-            this.RefButton.Name = "RefButton";
-            this.RefButton.Size = new System.Drawing.Size(55, 55);
-            this.RefButton.TabIndex = 11;
-            this.RefButton.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button1.Location = new System.Drawing.Point(865, 30);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(55, 55);
-            this.button1.TabIndex = 12;
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // menuStrip1
             // 
@@ -386,30 +288,190 @@
             this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.оПрограммеToolStripMenuItem.Text = "О программе";
             // 
+            // toolStripPanel
+            // 
+            this.toolStripPanel.AutoSize = true;
+            this.toolStripPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.toolStripPanel.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.toolStripPanel.Controls.Add(this.CreateButton);
+            this.toolStripPanel.Controls.Add(this.OpenButton);
+            this.toolStripPanel.Controls.Add(this.SaveButton);
+            this.toolStripPanel.Controls.Add(this.BackButton);
+            this.toolStripPanel.Controls.Add(this.ForwardButton);
+            this.toolStripPanel.Controls.Add(this.CopyButton);
+            this.toolStripPanel.Controls.Add(this.CutButton);
+            this.toolStripPanel.Controls.Add(this.InputButton);
+            this.toolStripPanel.Controls.Add(this.AnalisButton);
+            this.toolStripPanel.Controls.Add(this.RefButton);
+            this.toolStripPanel.Controls.Add(this.button1);
+            this.toolStripPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.toolStripPanel.Location = new System.Drawing.Point(0, 24);
+            this.toolStripPanel.Name = "toolStripPanel";
+            this.toolStripPanel.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
+            this.toolStripPanel.Size = new System.Drawing.Size(1015, 71);
+            this.toolStripPanel.TabIndex = 14;
+            // 
+            // CreateButton
+            // 
+            this.CreateButton.AutoSize = true;
+            this.CreateButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.CreateButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("CreateButton.BackgroundImage")));
+            this.CreateButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.CreateButton.Location = new System.Drawing.Point(13, 8);
+            this.CreateButton.MinimumSize = new System.Drawing.Size(55, 55);
+            this.CreateButton.Name = "CreateButton";
+            this.CreateButton.Size = new System.Drawing.Size(55, 55);
+            this.CreateButton.TabIndex = 0;
+            this.CreateButton.UseVisualStyleBackColor = true;
+            // 
+            // OpenButton
+            // 
+            this.OpenButton.AutoSize = true;
+            this.OpenButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.OpenButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("OpenButton.BackgroundImage")));
+            this.OpenButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.OpenButton.Location = new System.Drawing.Point(74, 8);
+            this.OpenButton.MinimumSize = new System.Drawing.Size(55, 55);
+            this.OpenButton.Name = "OpenButton";
+            this.OpenButton.Size = new System.Drawing.Size(55, 55);
+            this.OpenButton.TabIndex = 1;
+            this.OpenButton.UseVisualStyleBackColor = true;
+            // 
+            // SaveButton
+            // 
+            this.SaveButton.AutoSize = true;
+            this.SaveButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.SaveButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("SaveButton.BackgroundImage")));
+            this.SaveButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.SaveButton.Location = new System.Drawing.Point(135, 8);
+            this.SaveButton.MinimumSize = new System.Drawing.Size(55, 55);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(55, 55);
+            this.SaveButton.TabIndex = 2;
+            this.SaveButton.UseVisualStyleBackColor = true;
+            // 
+            // BackButton
+            // 
+            this.BackButton.AutoSize = true;
+            this.BackButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.BackButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BackButton.BackgroundImage")));
+            this.BackButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BackButton.Location = new System.Drawing.Point(196, 8);
+            this.BackButton.MinimumSize = new System.Drawing.Size(55, 55);
+            this.BackButton.Name = "BackButton";
+            this.BackButton.Size = new System.Drawing.Size(55, 55);
+            this.BackButton.TabIndex = 3;
+            this.BackButton.UseVisualStyleBackColor = true;
+            // 
+            // ForwardButton
+            // 
+            this.ForwardButton.AutoSize = true;
+            this.ForwardButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ForwardButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ForwardButton.BackgroundImage")));
+            this.ForwardButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.ForwardButton.Location = new System.Drawing.Point(257, 8);
+            this.ForwardButton.MinimumSize = new System.Drawing.Size(55, 55);
+            this.ForwardButton.Name = "ForwardButton";
+            this.ForwardButton.Size = new System.Drawing.Size(55, 55);
+            this.ForwardButton.TabIndex = 4;
+            this.ForwardButton.UseVisualStyleBackColor = true;
+            // 
+            // CopyButton
+            // 
+            this.CopyButton.AutoSize = true;
+            this.CopyButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.CopyButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("CopyButton.BackgroundImage")));
+            this.CopyButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.CopyButton.Location = new System.Drawing.Point(318, 8);
+            this.CopyButton.MinimumSize = new System.Drawing.Size(55, 55);
+            this.CopyButton.Name = "CopyButton";
+            this.CopyButton.Size = new System.Drawing.Size(55, 55);
+            this.CopyButton.TabIndex = 5;
+            this.CopyButton.UseVisualStyleBackColor = true;
+            // 
+            // CutButton
+            // 
+            this.CutButton.AutoSize = true;
+            this.CutButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.CutButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("CutButton.BackgroundImage")));
+            this.CutButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.CutButton.Location = new System.Drawing.Point(379, 8);
+            this.CutButton.MinimumSize = new System.Drawing.Size(55, 55);
+            this.CutButton.Name = "CutButton";
+            this.CutButton.Size = new System.Drawing.Size(55, 55);
+            this.CutButton.TabIndex = 6;
+            this.CutButton.UseVisualStyleBackColor = true;
+            // 
+            // InputButton
+            // 
+            this.InputButton.AutoSize = true;
+            this.InputButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.InputButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("InputButton.BackgroundImage")));
+            this.InputButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.InputButton.Location = new System.Drawing.Point(440, 8);
+            this.InputButton.MinimumSize = new System.Drawing.Size(55, 55);
+            this.InputButton.Name = "InputButton";
+            this.InputButton.Size = new System.Drawing.Size(55, 55);
+            this.InputButton.TabIndex = 7;
+            this.InputButton.UseVisualStyleBackColor = true;
+            // 
+            // AnalisButton
+            // 
+            this.AnalisButton.AutoSize = true;
+            this.AnalisButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.AnalisButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("AnalisButton.BackgroundImage")));
+            this.AnalisButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.AnalisButton.Location = new System.Drawing.Point(501, 8);
+            this.AnalisButton.MinimumSize = new System.Drawing.Size(55, 55);
+            this.AnalisButton.Name = "AnalisButton";
+            this.AnalisButton.Size = new System.Drawing.Size(55, 55);
+            this.AnalisButton.TabIndex = 8;
+            this.AnalisButton.UseVisualStyleBackColor = true;
+            // 
+            // RefButton
+            // 
+            this.RefButton.AutoSize = true;
+            this.RefButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.RefButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("RefButton.BackgroundImage")));
+            this.RefButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.RefButton.Location = new System.Drawing.Point(562, 8);
+            this.RefButton.MinimumSize = new System.Drawing.Size(55, 55);
+            this.RefButton.Name = "RefButton";
+            this.RefButton.Size = new System.Drawing.Size(55, 55);
+            this.RefButton.TabIndex = 9;
+            this.RefButton.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.AutoSize = true;
+            this.button1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
+            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button1.Location = new System.Drawing.Point(623, 8);
+            this.button1.MinimumSize = new System.Drawing.Size(55, 55);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(55, 55);
+            this.button1.TabIndex = 10;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1015, 507);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.RefButton);
-            this.Controls.Add(this.AnalisButton);
-            this.Controls.Add(this.InputButton);
-            this.Controls.Add(this.CutButton);
-            this.Controls.Add(this.CopyButton);
-            this.Controls.Add(this.ForwardButton);
-            this.Controls.Add(this.BackButton);
-            this.Controls.Add(this.SaveButton);
-            this.Controls.Add(this.OpenButton);
-            this.Controls.Add(this.CreateButton);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.toolStripPanel);
             this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
+            this.MinimumSize = new System.Drawing.Size(800, 400);
             this.Name = "MainForm";
-            this.Text = "Компилятор, не онлайн";
+            this.Text = "Компилятор";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.toolStripPanel.ResumeLayout(false);
+            this.toolStripPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -419,6 +481,9 @@
 
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.FlowLayoutPanel toolStripPanel;
+
         private System.Windows.Forms.Button CreateButton;
         private System.Windows.Forms.Button OpenButton;
         private System.Windows.Forms.Button SaveButton;
@@ -430,7 +495,7 @@
         private System.Windows.Forms.Button AnalisButton;
         private System.Windows.Forms.Button RefButton;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+
         private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem создатьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem открытьToolStripMenuItem;
@@ -458,5 +523,4 @@
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
     }
 }
-
 
