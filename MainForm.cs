@@ -90,7 +90,7 @@ namespace GUIshka
 
         private void UpdateFormTitleAndButtons()
         {
-            string title = "Компилятор, не онлайн";
+            string title = "Компилятор";
             if (!string.IsNullOrEmpty(currentFilePath))
             {
                 title = Path.GetFileName(currentFilePath) + (isTextModified ? "*" : "") + " - " + title;
@@ -326,3 +326,4 @@ namespace GUIshka
         }
     }
 }
+
