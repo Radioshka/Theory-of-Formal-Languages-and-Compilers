@@ -138,5 +138,7 @@ z3 = complex(4, 5.75);
 
 Перечень допустимых лексем:
 
-
+<p align="center">
+  <img src="images/de_leksemi.png" alt="Описание"/>
+</p>
 
