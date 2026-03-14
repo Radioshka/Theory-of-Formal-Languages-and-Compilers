@@ -9,33 +9,26 @@ namespace GUIshka
 {
     public class Lexeme
     {
-        public int Code { get; set; }              // Условный код
-        public string Type { get; set; }            // Тип лексемы
-        public string Value { get; set; }           // Значение лексемы
-        public int Line { get; set; }               // Номер строки
-        public int StartPos { get; set; }           // Начальная позиция
-        public int EndPos { get; set; }             // Конечная позиция
-        public bool IsError { get; set; }           // Флаг ошибки
-        public string ErrorMessage { get; set; }    // Сообщение об ошибке
+        public int Code { get; set; }
+        public string Type { get; set; }
+        public string Value { get; set; }
+        public int Line { get; set; }
+        public int StartPos { get; set; }
+        public int EndPos { get; set; }
+        public bool IsError { get; set; }
+        public string ErrorMessage { get; set; }
     }
 
-    /// <summary>
-    /// Лексический анализатор для объявления комплексного числа на Python
-    /// </summary>
     public class LexicalAnalyzer
     {
-        // Таблица типов лексем с кодами
         private readonly Dictionary<string, (int Code, string Type)> lexemeTypes = new Dictionary<string, (int, string)>()
         {
-            // Числа
             { "INTEGER", (1, "целое без знака") },
             { "FLOAT", (2, "вещественное число") },
             
-            // Идентификаторы и ключевые слова
             { "IDENTIFIER", (3, "идентификатор") },
             { "COMPLEX_KEYWORD", (4, "ключевое слово complex") },
             
-            // Операторы и разделители
             { "ASSIGN", (10, "оператор присваивания") },
             { "LPAREN", (11, "разделитель (") },
             { "RPAREN", (12, "разделитель )") },
@@ -43,17 +36,14 @@ namespace GUIshka
             { "SEMICOLON", (14, "конец оператора") },
             { "SPACE", (15, "разделитель (пробел)") },
             
-            // Ошибка
             { "ERROR", (99, "недопустимый символ") }
         };
 
-        // Ключевые слова
         private readonly HashSet<string> keywords = new HashSet<string>()
         {
             "complex"
         };
 
-        // Состояния конечного автомата
         private enum State
         {
             Start,
@@ -63,9 +53,6 @@ namespace GUIshka
             Error
         }
 
-        /// <summary>
-        /// Анализирует входной текст и возвращает список лексем
-        /// </summary>
         public List<Lexeme> Analyze(string text)
         {
             List<Lexeme> lexemes = new List<Lexeme>();
@@ -82,18 +69,15 @@ namespace GUIshka
             int lexemeStartLine = 1;
             int lexemeStartPos = 0;
 
-            // Добавляем символ перевода строки в конец для обработки последней лексемы
             string processedText = text + "\n";
 
             for (int i = 0; i < processedText.Length; i++)
             {
                 char c = processedText[i];
-                position = i - lineStartPos + 1; // Позиция в текущей строке (1-индексация)
+                position = i - lineStartPos + 1;
 
-                // Обработка перевода строки
                 if (c == '\n')
                 {
-                    // Завершаем текущую лексему, если она есть
                     if (currentLexeme.Length > 0)
                     {
                         ProcessLexeme(currentLexeme, lexemeStartLine, lexemeStartPos, lineNumber, position - 1, lexemes);
@@ -106,11 +90,9 @@ namespace GUIshka
                     continue;
                 }
 
-                // Основной автомат
                 switch (currentState)
                 {
                     case State.Start:
-                        // Начало новой лексемы
                         lexemeStartLine = lineNumber;
                         lexemeStartPos = position;
 
@@ -146,12 +128,10 @@ namespace GUIshka
                         }
                         else if (char.IsWhiteSpace(c))
                         {
-                            // Пробелы тоже добавляем как лексемы (для наглядности)
                             lexemes.Add(CreateLexeme(lexemeTypes["SPACE"], "(пробел)", lineNumber, position, position));
                         }
                         else
                         {
-                            // Недопустимый символ
                             lexemes.Add(CreateErrorLexeme(c.ToString(), lineNumber, position, $"Недопустимый символ '{c}'"));
                         }
                         break;
@@ -168,11 +148,10 @@ namespace GUIshka
                         }
                         else
                         {
-                            // Завершаем число и обрабатываем текущий символ заново
                             ProcessLexeme(currentLexeme, lexemeStartLine, lexemeStartPos, lineNumber, position - 1, lexemes);
                             currentLexeme = "";
                             currentState = State.Start;
-                            i--; // Откатываем индекс для обработки текущего символа
+                            i--;
                         }
                         break;
 
@@ -183,10 +162,8 @@ namespace GUIshka
                         }
                         else
                         {
-                            // Завершаем вещественное число
                             if (currentLexeme.EndsWith("."))
                             {
-                                // Ошибка: число заканчивается точкой
                                 lexemes.Add(CreateErrorLexeme(currentLexeme, lexemeStartLine, lexemeStartPos,
                                     $"Недопустимое число: '{currentLexeme}' должно содержать цифры после точки"));
                             }
@@ -196,7 +173,7 @@ namespace GUIshka
                             }
                             currentLexeme = "";
                             currentState = State.Start;
-                            i--; // Откатываем индекс
+                            i--;
                         }
                         break;
 
@@ -207,11 +184,10 @@ namespace GUIshka
                         }
                         else
                         {
-                            // Завершаем идентификатор
                             ProcessLexeme(currentLexeme, lexemeStartLine, lexemeStartPos, lineNumber, position - 1, lexemes, isIdentifier: true);
                             currentLexeme = "";
                             currentState = State.Start;
-                            i--; // Откатываем индекс
+                            i--;
                         }
                         break;
                 }
@@ -220,9 +196,6 @@ namespace GUIshka
             return lexemes;
         }
 
-        /// <summary>
-        /// Обрабатывает накопленную лексему и добавляет её в список
-        /// </summary>
         private void ProcessLexeme(string lexeme, int startLine, int startPos, int endLine, int endPos,
             List<Lexeme> lexemes, bool isFloat = false, bool isIdentifier = false)
         {
@@ -235,7 +208,6 @@ namespace GUIshka
             }
             else if (isIdentifier)
             {
-                // Проверяем, не ключевое ли это слово
                 if (keywords.Contains(lexeme))
                 {
                     lexemes.Add(CreateLexeme(lexemeTypes["COMPLEX_KEYWORD"], lexeme, startLine, startPos, endPos));
@@ -247,14 +219,10 @@ namespace GUIshka
             }
             else
             {
-                // Целое число
                 lexemes.Add(CreateLexeme(lexemeTypes["INTEGER"], lexeme, startLine, startPos, endPos));
             }
         }
 
-        /// <summary>
-        /// Создает лексему
-        /// </summary>
         private Lexeme CreateLexeme((int Code, string Type) typeInfo, string value, int line, int startPos, int endPos)
         {
             return new Lexeme
@@ -269,9 +237,6 @@ namespace GUIshka
             };
         }
 
-        /// <summary>
-        /// Создает лексему-ошибку
-        /// </summary>
         private Lexeme CreateErrorLexeme(string value, int line, int pos, string errorMessage)
         {
             return new Lexeme
