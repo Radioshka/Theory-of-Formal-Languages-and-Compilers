@@ -142,3 +142,7 @@ z3 = complex(4, 5.75);
   <img src="images/de_leksemi.png" alt="Описание"/>
 </p>
 
+**Диаграмма состояний:**
+
+
+
