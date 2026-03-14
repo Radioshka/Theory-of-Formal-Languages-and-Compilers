@@ -15,6 +15,8 @@ namespace GUIshka
     {
         private string currentFilePath = string.Empty;
         private bool isTextModified = false;
+        private LexicalAnalyzer lexicalAnalyzer;
+        private List<Lexeme> currentLexemes;
 
         public MainForm()
         {
@@ -22,17 +24,25 @@ namespace GUIshka
             InitializeEventHandlers();
             UpdateFormTitleAndButtons();
 
+            // Создаем экземпляр лексического анализатора
+            lexicalAnalyzer = new LexicalAnalyzer();
+
+            // Настраиваем DataGridView для отображения результатов
+            SetupDataGridView();
+
             this.Resize += MainForm_Resize;
         }
 
         private void InitializeEventHandlers()
         {
+            // Меню "Файл"
             this.создатьToolStripMenuItem.Click += CreateNewDocument;
             this.открытьToolStripMenuItem.Click += OpenDocument;
             this.сохранитьToolStripMenuItem.Click += SaveDocument;
             this.сохранитьКакToolStripMenuItem.Click += SaveDocumentAs;
             this.выходToolStripMenuItem.Click += ExitApplication;
 
+            // Меню "Правка"
             this.отменитьToolStripMenuItem.Click += UndoLastAction;
             this.повторитьToolStripMenuItem.Click += RedoLastAction;
             this.вырезатьToolStripMenuItem.Click += CutText;
@@ -40,9 +50,11 @@ namespace GUIshka
             this.вставитьToolStripMenuItem.Click += PasteText;
             this.удалитьToolStripMenuItem.Click += DeleteSelectedText;
 
+            // Меню "Справка"
             this.вызовСправкиToolStripMenuItem.Click += ShowHelp;
             this.оПрограммеToolStripMenuItem.Click += ShowAboutBox;
 
+            // Кнопки на панели инструментов
             this.CreateButton.Click += CreateNewDocument;
             this.OpenButton.Click += OpenDocument;
             this.SaveButton.Click += SaveDocument;
@@ -54,11 +66,228 @@ namespace GUIshka
             this.RefButton.Click += ShowHelp;
             this.button1.Click += ShowAboutBox;
 
+            // Кнопка "Пуск" для запуска анализатора
+            this.AnalisButton.Click += RunLexicalAnalysis;
+            this.пускToolStripMenuItem.Click += RunLexicalAnalysis;
+
+            // Отслеживание изменений текста
             this.richTextBox1.TextChanged += (s, e) =>
             {
                 isTextModified = true;
                 UpdateFormTitleAndButtons();
             };
+
+            // Обработка клика по DataGridView для навигации к ошибкам
+            this.dataGridView1.CellClick += DataGridView1_CellClick;
+        }
+
+        /// <summary>
+        /// Настройка DataGridView для отображения результатов анализа
+        /// </summary>
+        private void SetupDataGridView()
+        {
+            dataGridView1.AutoGenerateColumns = false;
+            dataGridView1.Columns.Clear();
+            dataGridView1.ReadOnly = true;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.MultiSelect = false;
+
+            // Создаем колонки
+            DataGridViewTextBoxColumn colCode = new DataGridViewTextBoxColumn();
+            colCode.HeaderText = "Условный код";
+            colCode.DataPropertyName = "Code";
+            colCode.Width = 80;
+            dataGridView1.Columns.Add(colCode);
+
+            DataGridViewTextBoxColumn colType = new DataGridViewTextBoxColumn();
+            colType.HeaderText = "Тип лексемы";
+            colType.DataPropertyName = "Type";
+            colType.Width = 150;
+            dataGridView1.Columns.Add(colType);
+
+            DataGridViewTextBoxColumn colValue = new DataGridViewTextBoxColumn();
+            colValue.HeaderText = "Лексема";
+            colValue.DataPropertyName = "Value";
+            colValue.Width = 100;
+            dataGridView1.Columns.Add(colValue);
+
+            DataGridViewTextBoxColumn colLocation = new DataGridViewTextBoxColumn();
+            colLocation.HeaderText = "Местоположение";
+            colLocation.DataPropertyName = "Location";
+            colLocation.Width = 150;
+            dataGridView1.Columns.Add(colLocation);
+
+            // Колонка для сообщения об ошибке (скрытая, используется для подсветки)
+            DataGridViewTextBoxColumn colError = new DataGridViewTextBoxColumn();
+            colError.HeaderText = "Ошибка";
+            colError.DataPropertyName = "ErrorMessage";
+            colError.Visible = false;
+            dataGridView1.Columns.Add(colError);
+
+            DataGridViewCheckBoxColumn colIsError = new DataGridViewCheckBoxColumn();
+            colIsError.HeaderText = "IsError";
+            colIsError.DataPropertyName = "IsError";
+            colIsError.Visible = false;
+            dataGridView1.Columns.Add(colIsError);
+        }
+
+        /// <summary>
+        /// Запуск лексического анализа
+        /// </summary>
+        private void RunLexicalAnalysis(object sender, EventArgs e)
+        {
+            try
+            {
+                // Получаем текст из RichTextBox
+                string text = richTextBox1.Text;
+
+                // Запускаем анализ
+                currentLexemes = lexicalAnalyzer.Analyze(text);
+
+                // Отображаем результаты в DataGridView
+                DisplayResults(currentLexemes);
+
+                // Подсвечиваем строки с ошибками
+                HighlightErrorRows();
+
+                // Если есть ошибки, показываем сообщение
+                int errorCount = currentLexemes.FindAll(l => l.IsError).Count;
+                if (errorCount > 0)
+                {
+                    MessageBox.Show($"Обнаружено ошибок: {errorCount}. Щелкните на строке с ошибкой для перехода к проблемному месту.",
+                        "Результат анализа", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при анализе: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Отображение результатов в DataGridView
+        /// </summary>
+        private void DisplayResults(List<Lexeme> lexemes)
+        {
+            // Создаем список для привязки данных
+            var displayList = new List<dynamic>();
+
+            foreach (var lex in lexemes)
+            {
+                string location = $"строка {lex.Line}, {lex.StartPos}-{lex.EndPos}";
+
+                displayList.Add(new
+                {
+                    lex.Code,
+                    lex.Type,
+                    lex.Value,
+                    Location = location,
+                    lex.ErrorMessage,
+                    lex.IsError
+                });
+            }
+
+            dataGridView1.DataSource = null;
+            dataGridView1.DataSource = displayList;
+
+            // Настраиваем цвета для строк
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.DataBoundItem != null)
+                {
+                    bool isError = (bool)row.DataBoundItem.GetType().GetProperty("IsError")?.GetValue(row.DataBoundItem);
+                    if (isError)
+                    {
+                        row.DefaultCellStyle.BackColor = Color.LightCoral;
+                        row.DefaultCellStyle.ForeColor = Color.White;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Подсвечивает строки с ошибками
+        /// </summary>
+        private void HighlightErrorRows()
+        {
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.DataBoundItem != null)
+                {
+                    bool isError = (bool)row.DataBoundItem.GetType().GetProperty("IsError")?.GetValue(row.DataBoundItem);
+                    if (isError)
+                    {
+                        row.DefaultCellStyle.BackColor = Color.LightCoral;
+                        row.DefaultCellStyle.ForeColor = Color.White;
+                    }
+                    else
+                    {
+                        row.DefaultCellStyle.BackColor = Color.White;
+                        row.DefaultCellStyle.ForeColor = Color.Black;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Обработка клика по ячейке DataGridView
+        /// </summary>
+        private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && currentLexemes != null && e.RowIndex < currentLexemes.Count)
+            {
+                Lexeme selectedLexeme = currentLexemes[e.RowIndex];
+
+                // Устанавливаем курсор в RichTextBox на позицию лексемы
+                int charIndex = GetCharIndexFromPosition(selectedLexeme.Line, selectedLexeme.StartPos);
+
+                if (charIndex >= 0)
+                {
+                    richTextBox1.Focus();
+                    richTextBox1.SelectionStart = charIndex;
+                    richTextBox1.SelectionLength = selectedLexeme.EndPos - selectedLexeme.StartPos + 1;
+                    richTextBox1.ScrollToCaret();
+
+                    // Если это ошибка, показываем сообщение
+                    if (selectedLexeme.IsError)
+                    {
+                        MessageBox.Show(selectedLexeme.ErrorMessage, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Получает индекс символа в RichTextBox по строке и позиции
+        /// </summary>
+        private int GetCharIndexFromPosition(int line, int position)
+        {
+            string text = richTextBox1.Text;
+            int currentLine = 1;
+            int charIndex = 0;
+
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (currentLine == line)
+                {
+                    // Нашли нужную строку, ищем позицию
+                    int posInLine = i - charIndex + 1;
+                    if (posInLine == position)
+                    {
+                        return i;
+                    }
+                }
+
+                if (text[i] == '\n')
+                {
+                    currentLine++;
+                    charIndex = i + 1;
+                }
+            }
+
+            return -1;
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -132,6 +361,7 @@ namespace GUIshka
             }
         }
 
+        // ========== ФАЙЛ ==========
 
         private void CreateNewDocument(object sender, EventArgs e)
         {
@@ -141,6 +371,7 @@ namespace GUIshka
             richTextBox1.Clear();
             currentFilePath = string.Empty;
             isTextModified = false;
+            dataGridView1.DataSource = null;
             UpdateFormTitleAndButtons();
         }
 
@@ -151,7 +382,7 @@ namespace GUIshka
 
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
+                openFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|Python файлы (*.py)|*.py|Все файлы (*.*)|*.*";
                 openFileDialog.FilterIndex = 1;
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -204,7 +435,7 @@ namespace GUIshka
         {
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
-                saveFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
+                saveFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|Python файлы (*.py)|*.py|Все файлы (*.*)|*.*";
                 saveFileDialog.FilterIndex = 1;
 
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
@@ -252,6 +483,7 @@ namespace GUIshka
             }
         }
 
+        // ========== ПРАВКА ==========
 
         private void UndoLastAction(object sender, EventArgs e)
         {
@@ -300,30 +532,43 @@ namespace GUIshka
             }
         }
 
+        // ========== СПРАВКА ==========
 
         private void ShowHelp(object sender, EventArgs e)
         {
-            string helpText = "Реализованные функции:\n\n" +
-                              "Файл: Создать, Открыть, Сохранить, Сохранить как, Выход\n" +
-                              "Правка: Отмена, Повтор, Вырезать, Копировать, Вставить, Удалить\n" +
-                              "Интерфейс: Все элементы подстраиваются под размер окна\n" +
-                              "Полосы прокрутки появляются автоматически\n\n" +
-                              "Область результатов (таблица внизу) предназначена для будущего анализатора кода.";
+            string helpText = "ЛАБОРАТОРНАЯ РАБОТА №2: Лексический анализатор\n\n" +
+                              "Вариант: Объявление комплексного числа с инициализацией на языке Python\n\n" +
+                              "Пример корректного кода:\n" +
+                              "z3 = complex(0, 2.5);\n\n" +
+                              "Распознаваемые лексемы:\n" +
+                              "• Идентификаторы (например, z3)\n" +
+                              "• Ключевое слово complex\n" +
+                              "• Числа: целые (0) и вещественные (2.5)\n" +
+                              "• Операторы: = (присваивание)\n" +
+                              "• Разделители: (, ), ,, ;\n\n" +
+                              "Навигация по ошибкам:\n" +
+                              "• Щелкните на строке с ошибкой в таблице\n" +
+                              "• Курсор автоматически перейдет к проблемному месту\n" +
+                              "• Ошибки подсвечиваются красным в таблице";
 
-            MessageBox.Show(helpText, "Справка - Руководство пользователя",
+            MessageBox.Show(helpText, "Справка - Лексический анализатор",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void ShowAboutBox(object sender, EventArgs e)
         {
-            string aboutText = "Текстовый редактор с расширением до языкового процессора\n\n" +
-                               "Версия: 1.0\n" +
-                               "© 2026, GUIshka\n\n" +
-                               "Программа является самодостаточной и не требует установки IDE или дополнительных библиотек.";
+            string aboutText = "Лексический анализатор для объявления комплексного числа на Python\n\n" +
+                               "Версия: 2.0\n" +
+                               "© 2024, GUIshka\n\n" +
+                               "Функционал:\n" +
+                               "✓ Текстовый редактор с базовыми операциями\n" +
+                               "✓ Лексический анализ кода\n" +
+                               "✓ Подсветка ошибок\n" +
+                               "✓ Навигация по ошибкам\n" +
+                               "✓ Многострочная поддержка";
 
             MessageBox.Show(aboutText, "О программе",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
-
