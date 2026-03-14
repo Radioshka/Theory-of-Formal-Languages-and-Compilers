@@ -24,10 +24,8 @@ namespace GUIshka
             InitializeEventHandlers();
             UpdateFormTitleAndButtons();
 
-            // Создаем экземпляр лексического анализатора
             lexicalAnalyzer = new LexicalAnalyzer();
 
-            // Настраиваем DataGridView для отображения результатов
             SetupDataGridView();
 
             this.Resize += MainForm_Resize;
@@ -35,14 +33,12 @@ namespace GUIshka
 
         private void InitializeEventHandlers()
         {
-            // Меню "Файл"
             this.создатьToolStripMenuItem.Click += CreateNewDocument;
             this.открытьToolStripMenuItem.Click += OpenDocument;
             this.сохранитьToolStripMenuItem.Click += SaveDocument;
             this.сохранитьКакToolStripMenuItem.Click += SaveDocumentAs;
             this.выходToolStripMenuItem.Click += ExitApplication;
 
-            // Меню "Правка"
             this.отменитьToolStripMenuItem.Click += UndoLastAction;
             this.повторитьToolStripMenuItem.Click += RedoLastAction;
             this.вырезатьToolStripMenuItem.Click += CutText;
@@ -50,11 +46,9 @@ namespace GUIshka
             this.вставитьToolStripMenuItem.Click += PasteText;
             this.удалитьToolStripMenuItem.Click += DeleteSelectedText;
 
-            // Меню "Справка"
             this.вызовСправкиToolStripMenuItem.Click += ShowHelp;
             this.оПрограммеToolStripMenuItem.Click += ShowAboutBox;
 
-            // Кнопки на панели инструментов
             this.CreateButton.Click += CreateNewDocument;
             this.OpenButton.Click += OpenDocument;
             this.SaveButton.Click += SaveDocument;
@@ -66,24 +60,18 @@ namespace GUIshka
             this.RefButton.Click += ShowHelp;
             this.button1.Click += ShowAboutBox;
 
-            // Кнопка "Пуск" для запуска анализатора
             this.AnalisButton.Click += RunLexicalAnalysis;
             this.пускToolStripMenuItem.Click += RunLexicalAnalysis;
 
-            // Отслеживание изменений текста
             this.richTextBox1.TextChanged += (s, e) =>
             {
                 isTextModified = true;
                 UpdateFormTitleAndButtons();
             };
 
-            // Обработка клика по DataGridView для навигации к ошибкам
             this.dataGridView1.CellClick += DataGridView1_CellClick;
         }
 
-        /// <summary>
-        /// Настройка DataGridView для отображения результатов анализа
-        /// </summary>
         private void SetupDataGridView()
         {
             dataGridView1.AutoGenerateColumns = false;
@@ -94,7 +82,6 @@ namespace GUIshka
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.MultiSelect = false;
 
-            // Создаем колонки
             DataGridViewTextBoxColumn colCode = new DataGridViewTextBoxColumn();
             colCode.HeaderText = "Условный код";
             colCode.DataPropertyName = "Code";
@@ -119,7 +106,6 @@ namespace GUIshka
             colLocation.Width = 150;
             dataGridView1.Columns.Add(colLocation);
 
-            // Колонка для сообщения об ошибке (скрытая, используется для подсветки)
             DataGridViewTextBoxColumn colError = new DataGridViewTextBoxColumn();
             colError.HeaderText = "Ошибка";
             colError.DataPropertyName = "ErrorMessage";
@@ -133,26 +119,18 @@ namespace GUIshka
             dataGridView1.Columns.Add(colIsError);
         }
 
-        /// <summary>
-        /// Запуск лексического анализа
-        /// </summary>
         private void RunLexicalAnalysis(object sender, EventArgs e)
         {
             try
             {
-                // Получаем текст из RichTextBox
                 string text = richTextBox1.Text;
 
-                // Запускаем анализ
                 currentLexemes = lexicalAnalyzer.Analyze(text);
 
-                // Отображаем результаты в DataGridView
                 DisplayResults(currentLexemes);
 
-                // Подсвечиваем строки с ошибками
                 HighlightErrorRows();
 
-                // Если есть ошибки, показываем сообщение
                 int errorCount = currentLexemes.FindAll(l => l.IsError).Count;
                 if (errorCount > 0)
                 {
@@ -166,12 +144,8 @@ namespace GUIshka
             }
         }
 
-        /// <summary>
-        /// Отображение результатов в DataGridView
-        /// </summary>
         private void DisplayResults(List<Lexeme> lexemes)
         {
-            // Создаем список для привязки данных
             var displayList = new List<dynamic>();
 
             foreach (var lex in lexemes)
@@ -192,7 +166,6 @@ namespace GUIshka
             dataGridView1.DataSource = null;
             dataGridView1.DataSource = displayList;
 
-            // Настраиваем цвета для строк
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 if (row.DataBoundItem != null)
@@ -207,9 +180,6 @@ namespace GUIshka
             }
         }
 
-        /// <summary>
-        /// Подсвечивает строки с ошибками
-        /// </summary>
         private void HighlightErrorRows()
         {
             foreach (DataGridViewRow row in dataGridView1.Rows)
@@ -231,16 +201,12 @@ namespace GUIshka
             }
         }
 
-        /// <summary>
-        /// Обработка клика по ячейке DataGridView
-        /// </summary>
         private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && currentLexemes != null && e.RowIndex < currentLexemes.Count)
             {
                 Lexeme selectedLexeme = currentLexemes[e.RowIndex];
 
-                // Устанавливаем курсор в RichTextBox на позицию лексемы
                 int charIndex = GetCharIndexFromPosition(selectedLexeme.Line, selectedLexeme.StartPos);
 
                 if (charIndex >= 0)
@@ -250,7 +216,6 @@ namespace GUIshka
                     richTextBox1.SelectionLength = selectedLexeme.EndPos - selectedLexeme.StartPos + 1;
                     richTextBox1.ScrollToCaret();
 
-                    // Если это ошибка, показываем сообщение
                     if (selectedLexeme.IsError)
                     {
                         MessageBox.Show(selectedLexeme.ErrorMessage, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -259,9 +224,6 @@ namespace GUIshka
             }
         }
 
-        /// <summary>
-        /// Получает индекс символа в RichTextBox по строке и позиции
-        /// </summary>
         private int GetCharIndexFromPosition(int line, int position)
         {
             string text = richTextBox1.Text;
@@ -272,7 +234,6 @@ namespace GUIshka
             {
                 if (currentLine == line)
                 {
-                    // Нашли нужную строку, ищем позицию
                     int posInLine = i - charIndex + 1;
                     if (posInLine == position)
                     {
@@ -360,8 +321,6 @@ namespace GUIshka
                 return false;
             }
         }
-
-        // ========== ФАЙЛ ==========
 
         private void CreateNewDocument(object sender, EventArgs e)
         {
@@ -483,8 +442,6 @@ namespace GUIshka
             }
         }
 
-        // ========== ПРАВКА ==========
-
         private void UndoLastAction(object sender, EventArgs e)
         {
             if (richTextBox1.CanUndo)
@@ -531,8 +488,6 @@ namespace GUIshka
                 richTextBox1.SelectionStart = selectionStart;
             }
         }
-
-        // ========== СПРАВКА ==========
 
         private void ShowHelp(object sender, EventArgs e)
         {
