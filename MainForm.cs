@@ -70,6 +70,22 @@ namespace GUIshka
             };
 
             this.dataGridView1.CellClick += DataGridView1_CellClick;
+
+            this.richTextBox1.KeyDown += RichTextBox1_KeyDown;
+        }
+
+        private void RichTextBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.A)
+            {
+                richTextBox1.SelectAll();
+                e.SuppressKeyPress = true;
+            }
+            else if (e.Control && e.KeyCode == Keys.F)
+            {
+                RunLexicalAnalysis(sender, e);
+                e.SuppressKeyPress = true;
+            }
         }
 
         private void SetupDataGridView()
@@ -81,23 +97,24 @@ namespace GUIshka
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.MultiSelect = false;
+            dataGridView1.RowHeadersVisible = true; 
 
             DataGridViewTextBoxColumn colCode = new DataGridViewTextBoxColumn();
             colCode.HeaderText = "Условный код";
             colCode.DataPropertyName = "Code";
-            colCode.Width = 80;
+            colCode.Width = 90;
             dataGridView1.Columns.Add(colCode);
 
             DataGridViewTextBoxColumn colType = new DataGridViewTextBoxColumn();
             colType.HeaderText = "Тип лексемы";
             colType.DataPropertyName = "Type";
-            colType.Width = 150;
+            colType.Width = 180;
             dataGridView1.Columns.Add(colType);
 
             DataGridViewTextBoxColumn colValue = new DataGridViewTextBoxColumn();
             colValue.HeaderText = "Лексема";
             colValue.DataPropertyName = "Value";
-            colValue.Width = 100;
+            colValue.Width = 120;
             dataGridView1.Columns.Add(colValue);
 
             DataGridViewTextBoxColumn colLocation = new DataGridViewTextBoxColumn();
@@ -125,6 +142,13 @@ namespace GUIshka
             {
                 string text = richTextBox1.Text;
 
+                if (string.IsNullOrWhiteSpace(text))
+                {
+                    MessageBox.Show("Введите текст для анализа.", "Информация",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
                 currentLexemes = lexicalAnalyzer.Analyze(text);
 
                 DisplayResults(currentLexemes);
@@ -137,10 +161,16 @@ namespace GUIshka
                     MessageBox.Show($"Обнаружено ошибок: {errorCount}. Щелкните на строке с ошибкой для перехода к проблемному месту.",
                         "Результат анализа", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
+                else
+                {
+                    MessageBox.Show($"Анализ завершен успешно. Найдено лексем: {currentLexemes.Count}",
+                        "Результат анализа", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при анализе: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Ошибка при анализе: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -166,18 +196,7 @@ namespace GUIshka
             dataGridView1.DataSource = null;
             dataGridView1.DataSource = displayList;
 
-            foreach (DataGridViewRow row in dataGridView1.Rows)
-            {
-                if (row.DataBoundItem != null)
-                {
-                    bool isError = (bool)row.DataBoundItem.GetType().GetProperty("IsError")?.GetValue(row.DataBoundItem);
-                    if (isError)
-                    {
-                        row.DefaultCellStyle.BackColor = Color.LightCoral;
-                        row.DefaultCellStyle.ForeColor = Color.White;
-                    }
-                }
-            }
+            dataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
         }
 
         private void HighlightErrorRows()
@@ -189,13 +208,15 @@ namespace GUIshka
                     bool isError = (bool)row.DataBoundItem.GetType().GetProperty("IsError")?.GetValue(row.DataBoundItem);
                     if (isError)
                     {
-                        row.DefaultCellStyle.BackColor = Color.LightCoral;
-                        row.DefaultCellStyle.ForeColor = Color.White;
+                        row.DefaultCellStyle.BackColor = Color.FromArgb(255, 200, 200); // Светло-красный
+                        row.DefaultCellStyle.ForeColor = Color.DarkRed;
+                        row.DefaultCellStyle.Font = new Font(dataGridView1.Font, FontStyle.Bold);
                     }
                     else
                     {
                         row.DefaultCellStyle.BackColor = Color.White;
                         row.DefaultCellStyle.ForeColor = Color.Black;
+                        row.DefaultCellStyle.Font = new Font(dataGridView1.Font, FontStyle.Regular);
                     }
                 }
             }
@@ -218,7 +239,19 @@ namespace GUIshka
 
                     if (selectedLexeme.IsError)
                     {
-                        MessageBox.Show(selectedLexeme.ErrorMessage, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        richTextBox1.SelectionBackColor = Color.FromArgb(255, 200, 200);
+
+                        MessageBox.Show(selectedLexeme.ErrorMessage, "Ошибка",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        Timer timer = new Timer();
+                        timer.Interval = 1000;
+                        timer.Tick += (s, args) =>
+                        {
+                            richTextBox1.SelectionBackColor = Color.White;
+                            timer.Stop();
+                        };
+                        timer.Start();
                     }
                 }
             }
@@ -228,13 +261,13 @@ namespace GUIshka
         {
             string text = richTextBox1.Text;
             int currentLine = 1;
-            int charIndex = 0;
+            int lineStartIndex = 0;
 
             for (int i = 0; i < text.Length; i++)
             {
                 if (currentLine == line)
                 {
-                    int posInLine = i - charIndex + 1;
+                    int posInLine = i - lineStartIndex + 1;
                     if (posInLine == position)
                     {
                         return i;
@@ -244,7 +277,7 @@ namespace GUIshka
                 if (text[i] == '\n')
                 {
                     currentLine++;
-                    charIndex = i + 1;
+                    lineStartIndex = i + 1;
                 }
             }
 
@@ -274,6 +307,10 @@ namespace GUIshka
                     {
                         richTextBox1.ScrollBars = RichTextBoxScrollBars.Both;
                     }
+                    else
+                    {
+                        richTextBox1.ScrollBars = RichTextBoxScrollBars.Vertical;
+                    }
                 }
             }
         }
@@ -295,6 +332,17 @@ namespace GUIshka
             BackButton.Enabled = richTextBox1.CanUndo;
             повторитьToolStripMenuItem.Enabled = richTextBox1.CanRedo;
             ForwardButton.Enabled = richTextBox1.CanRedo;
+
+            bool hasSelection = richTextBox1.SelectionLength > 0;
+            вырезатьToolStripMenuItem.Enabled = hasSelection;
+            CutButton.Enabled = hasSelection;
+            копироватьToolStripMenuItem.Enabled = hasSelection;
+            CopyButton.Enabled = hasSelection;
+            удалитьToolStripMenuItem.Enabled = hasSelection;
+
+            bool canPaste = Clipboard.ContainsText();
+            вставитьToolStripMenuItem.Enabled = canPaste;
+            InputButton.Enabled = canPaste;
         }
 
         private bool PromptSaveIfModified()
@@ -331,6 +379,7 @@ namespace GUIshka
             currentFilePath = string.Empty;
             isTextModified = false;
             dataGridView1.DataSource = null;
+            currentLexemes = null;
             UpdateFormTitleAndButtons();
         }
 
@@ -343,12 +392,14 @@ namespace GUIshka
             {
                 openFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|Python файлы (*.py)|*.py|Все файлы (*.*)|*.*";
                 openFileDialog.FilterIndex = 1;
+                openFileDialog.Title = "Открыть файл";
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     try
                     {
-                        richTextBox1.LoadFile(openFileDialog.FileName, RichTextBoxStreamType.PlainText);
+                        string fileContent = File.ReadAllText(openFileDialog.FileName);
+                        richTextBox1.Text = fileContent;
                         currentFilePath = openFileDialog.FileName;
                         isTextModified = false;
                         UpdateFormTitleAndButtons();
@@ -356,7 +407,8 @@ namespace GUIshka
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Ошибка при открытии файла: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show($"Ошибка при открытии файла: {ex.Message}", "Ошибка",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -372,14 +424,15 @@ namespace GUIshka
             {
                 try
                 {
-                    richTextBox1.SaveFile(currentFilePath, RichTextBoxStreamType.PlainText);
+                    File.WriteAllText(currentFilePath, richTextBox1.Text);
                     isTextModified = false;
                     UpdateFormTitleAndButtons();
                     return true;
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Ошибка при сохранении файла: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Ошибка при сохранении файла: {ex.Message}", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
             }
@@ -396,12 +449,13 @@ namespace GUIshka
             {
                 saveFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|Python файлы (*.py)|*.py|Все файлы (*.*)|*.*";
                 saveFileDialog.FilterIndex = 1;
+                saveFileDialog.Title = "Сохранить файл как";
 
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     try
                     {
-                        richTextBox1.SaveFile(saveFileDialog.FileName, RichTextBoxStreamType.PlainText);
+                        File.WriteAllText(saveFileDialog.FileName, richTextBox1.Text);
                         currentFilePath = saveFileDialog.FileName;
                         isTextModified = false;
                         UpdateFormTitleAndButtons();
@@ -409,7 +463,8 @@ namespace GUIshka
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Ошибка при сохранении файла: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show($"Ошибка при сохранении файла: {ex.Message}", "Ошибка",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
@@ -462,12 +517,19 @@ namespace GUIshka
 
         private void CutText(object sender, EventArgs e)
         {
-            richTextBox1.Cut();
+            if (richTextBox1.SelectionLength > 0)
+            {
+                richTextBox1.Cut();
+            }
+            UpdateFormTitleAndButtons();
         }
 
         private void CopyText(object sender, EventArgs e)
         {
-            richTextBox1.Copy();
+            if (richTextBox1.SelectionLength > 0)
+            {
+                richTextBox1.Copy();
+            }
         }
 
         private void PasteText(object sender, EventArgs e)
@@ -475,6 +537,7 @@ namespace GUIshka
             if (Clipboard.ContainsText())
             {
                 richTextBox1.Paste();
+                UpdateFormTitleAndButtons();
             }
         }
 
@@ -486,21 +549,48 @@ namespace GUIshka
             {
                 richTextBox1.Text = richTextBox1.Text.Remove(selectionStart, selectionLength);
                 richTextBox1.SelectionStart = selectionStart;
+                isTextModified = true;
+                UpdateFormTitleAndButtons();
             }
         }
 
         private void ShowHelp(object sender, EventArgs e)
         {
-            string helpText = "ЛАБОРАТОРНАЯ РАБОТА №2: Лексический анализатор\n\n" +
+            string helpText = "ЛАБОРАТОРНАЯ РАБОТА\n\n" +
                               "Вариант: Объявление комплексного числа с инициализацией на языке Python\n\n" +
                               "Пример корректного кода:\n" +
                               "z3 = complex(0, 2.5);\n\n" +
-                              "Распознаваемые лексемы:\n" +
-                              "• Идентификаторы (например, z3)\n" +
-                              "• Ключевое слово complex\n" +
-                              "• Числа: целые (0) и вещественные (2.5)\n" +
-                              "• Операторы: = (присваивание)\n" +
-                              "• Разделители: (, ), ,, ;\n\n" +
+                              "РАСШИРЕННАЯ ОБРАБОТКА ЧИСЕЛ:\n\n" +
+                              "✓ Целые числа:\n" +
+                              "   123 \n" +
+                              "   -456 \n\n" +
+                              "✓ Вещественные числа:\n" +
+                              "   3.14 \n" +
+                              "   -2.5 \n\n" +
+                              "✓ Числа с экспонентой:\n" +
+                              "   1.5e-10 \n" +
+                              "   -2.5E+3 \n" +
+                              "   1e6 \n\n" +
+                              "✓ Комплексные числа (Python-формат):\n" +
+                              "   3+4j \n" +
+                              "   -2-5j \n" +
+                              "   1.5+2.5j \n" +
+                              "   1e-3+4j \n\n" +
+                              "ДРУГИЕ ЛЕКСЕМЫ:\n" +
+                              "• Идентификаторы (код 20): z3, x, y\n" +
+                              "• Ключевое слово complex (код 21)\n" +
+                              "• Неправильное ключевое слово (код 22): komplex, compLex\n" +
+                              "• Операторы: = (30), + (36), - (37), * (38), / (39)\n" +
+                              "• Разделители: ( (31), ) (32), , (33), ; (34)\n" +
+                              "• Пробел (35)\n\n" +
+                              "ГОРЯЧИЕ КЛАВИШИ:\n" +
+                              "• Ctrl+A - выделить все\n" +
+                              "• Ctrl+F - запустить анализ\n" +
+                              "• Ctrl+Z - отменить\n" +
+                              "• Ctrl+Y - повторить\n" +
+                              "• Ctrl+X - вырезать\n" +
+                              "• Ctrl+C - копировать\n" +
+                              "• Ctrl+V - вставить\n\n" +
                               "Навигация по ошибкам:\n" +
                               "• Щелкните на строке с ошибкой в таблице\n" +
                               "• Курсор автоматически перейдет к проблемному месту\n" +
@@ -513,17 +603,63 @@ namespace GUIshka
         private void ShowAboutBox(object sender, EventArgs e)
         {
             string aboutText = "Лексический анализатор для объявления комплексного числа на Python\n\n" +
-                               "Версия: 2.0\n" +
-                               "© 2024, GUIshka\n\n" +
                                "Функционал:\n" +
                                "✓ Текстовый редактор с базовыми операциями\n" +
                                "✓ Лексический анализ кода\n" +
+                               "✓ Расширенная обработка чисел\n" +
+                               "   - Целые и отрицательные целые\n" +
+                               "   - Вещественные и отрицательные вещественные\n" +
+                               "   - Числа с экспонентой\n" +
+                               "   - Комплексные числа в Python-формате\n" +
+                               "✓ Проверка правильности ключевого слова complex\n" +
                                "✓ Подсветка ошибок\n" +
                                "✓ Навигация по ошибкам\n" +
-                               "✓ Многострочная поддержка";
+                               "✓ Многострочная поддержка\n" +
+                               "✓ Горячие клавиши";
 
             MessageBox.Show(aboutText, "О программе",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void ClearResults()
+        {
+            dataGridView1.DataSource = null;
+            currentLexemes = null;
+        }
+
+        protected override void OnDragEnter(DragEventArgs e)
+        {
+            base.OnDragEnter(e);
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+        }
+
+        protected override void OnDragDrop(DragEventArgs e)
+        {
+            base.OnDragDrop(e);
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            if (files.Length > 0)
+            {
+                if (PromptSaveIfModified())
+                {
+                    try
+                    {
+                        string fileContent = File.ReadAllText(files[0]);
+                        richTextBox1.Text = fileContent;
+                        currentFilePath = files[0];
+                        isTextModified = false;
+                        UpdateFormTitleAndButtons();
+                        UpdateScrollBars();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ошибка при открытии файла: {ex.Message}", "Ошибка",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
         }
     }
 }
