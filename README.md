@@ -145,7 +145,7 @@ z3 = complex(4, 5.75);
 **Диаграмма состояний:**
 
 <p align="center">
-  <img src="images/diagramm_leksem.png" alt="Диаграмма состояний"/>
+  <img src="images/Leksem.png" alt="Диаграмма состояний"/>
 </p>
 
 **Краткое описание работы автомата:**
