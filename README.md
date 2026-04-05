@@ -237,6 +237,30 @@ z3 = complex(4, 5.75);
 -?\d+(?:,\d+)?
 ```
 
+**Пояснение обозначений**
+
+<p align="center">
+  <img src="images/lab4/chisla_poyasn.PNG" alt="-"/>
+</p>
+
+**Примеры строк, которые ДОЛЖНЫ находиться**
+
+<p align="center">
+  <img src="images/lab4/chisl_doljni.PNG" alt="-"/>
+</p>
+
+**Примеры строк, которые НЕ ДОЛЖНЫ находиться**
+
+<p align="center">
+  <img src="images/lab4/chisl_ne.PNG" alt="-"/>
+</p>
+
+**Скриншот работы программы**
+
+<p align="center">
+  <img src="images/lab4/chisl_prim.PNG" alt="-"/>
+</p>
+
 **Решение задачи №2:** Поиск биткоин-адресов
 
 **Описание задачи:** Необходимо найти в тексте биткоин-адреса двух типов:
@@ -252,6 +276,30 @@ P2SH (Pay-to-Script-Hash) - начинается с символа 3
 \b[13][a-km-zA-HJ-NP-Z1-9]{25,34}\b
 ```
 
+**Пояснение обозначений**
+
+<p align="center">
+  <img src="images/lab4/poyasn_bit.PNG" alt="-"/>
+</p>
+
+**Примеры строк, которые ДОЛЖНЫ находиться**
+
+<p align="center">
+  <img src="images/lab4/bit_dolj.PNG" alt="-"/>
+</p>
+
+**Примеры строк, которые НЕ ДОЛЖНЫ находиться**
+
+<p align="center">
+  <img src="images/lab4/bit_nedolj.PNG" alt="-"/>
+</p>
+
+**Скриншот работы программы**
+
+<p align="center">
+  <img src="images/lab4/bit_prim.PNG" alt="-"/>
+</p>
+
 **Решение задачи №3:** Поиск времени (формат ЧЧ:ММ:СС)
 
 **Описание задачи:** Необходимо найти в тексте время в 24-часовом формате: ЧЧ:ММ:СС, где:
@@ -266,3 +314,28 @@ P2SH (Pay-to-Script-Hash) - начинается с символа 3
 ```
 \b(?:[0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]\b
 ```
+
+**Пояснение обозначений**
+
+<p align="center">
+  <img src="images/lab4/vrem_poyasn.PNG" alt="-"/>
+</p>
+
+**Примеры строк, которые ДОЛЖНЫ находиться**
+
+<p align="center">
+  <img src="images/lab4/vrem_doljn.PNG" alt="-"/>
+</p>
+
+**Примеры строк, которые НЕ ДОЛЖНЫ находиться**
+
+<p align="center">
+  <img src="images/lab4/vrem_nedoljn.PNG" alt="-"/>
+</p>
+
+**Скриншот работы программы**
+
+<p align="center">
+  <img src="images/lab4/vrem_prim.PNG" alt="-"/>
+</p>
+
