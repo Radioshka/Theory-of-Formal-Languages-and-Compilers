@@ -261,6 +261,12 @@ z3 = complex(4, 5.75);
   <img src="images/lab4/chisl_prim.PNG" alt="-"/>
 </p>
 
+**Картинка графа автомата**
+
+<p align="center">
+  <img src="images/lab4/RW_chisla.png" alt="-"/>
+</p>
+
 **Решение задачи №2:** Поиск биткоин-адресов
 
 **Описание задачи:** Необходимо найти в тексте биткоин-адреса двух типов:
@@ -298,6 +304,12 @@ P2SH (Pay-to-Script-Hash) - начинается с символа 3
 
 <p align="center">
   <img src="images/lab4/bit_prim.PNG" alt="-"/>
+</p>
+
+**Картинка графа автомата**
+
+<p align="center">
+  <img src="images/lab4/Bitoc.png" alt="-"/>
 </p>
 
 **Решение задачи №3:** Поиск времени (формат ЧЧ:ММ:СС)
@@ -339,3 +351,8 @@ P2SH (Pay-to-Script-Hash) - начинается с символа 3
   <img src="images/lab4/vrem_prim.PNG" alt="-"/>
 </p>
 
+**Картинка графа автомата**
+
+<p align="center">
+  <img src="images/lab4/timengi.png" alt="-"/>
+</p>
