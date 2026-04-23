@@ -264,7 +264,7 @@ z3 = complex(4, 5.75);
 **Картинка графа автомата**
 
 <p align="center">
-  <img src="images/lab4/RW_chisla.png" alt="-"/>
+  <img src="images/lab4/chisl_tchk.png" alt="-"/>
 </p>
 
 **Решение задачи №2:** Поиск биткоин-адресов
@@ -354,5 +354,5 @@ P2SH (Pay-to-Script-Hash) - начинается с символа 3
 **Картинка графа автомата**
 
 <p align="center">
-  <img src="images/lab4/timengi.png" alt="-"/>
+  <img src="images/lab4/Time.png" alt="-"/>
 </p>
