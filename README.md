@@ -309,7 +309,7 @@ P2SH (Pay-to-Script-Hash) - начинается с символа 3
 **Картинка графа автомата**
 
 <p align="center">
-  <img src="images/lab4/Bitoc.png" alt="-"/>
+  <img src="images/lab4/Bitocc.png" alt="-"/>
 </p>
 
 **Решение задачи №3:** Поиск времени (формат ЧЧ:ММ:СС)
