@@ -9,40 +9,41 @@ namespace GUIshka
 {
     public class Lexeme
     {
-        public int Code { get; set; }              
-        public string Type { get; set; }         
-        public string Value { get; set; }          
-        public int Line { get; set; }          
-        public int StartPos { get; set; }         
-        public int EndPos { get; set; }         
-        public bool IsError { get; set; }        
-        public string ErrorMessage { get; set; }   
+        public int Code { get; set; }
+        public string Type { get; set; }
+        public string Value { get; set; }
+        public int Line { get; set; }
+        public int StartPos { get; set; }
+        public int EndPos { get; set; }
+        public bool IsError { get; set; }
+        public string ErrorMessage { get; set; }
     }
 
     public class LexicalAnalyzer
     {
         private readonly Dictionary<string, (int Code, string Type)> lexemeTypes = new Dictionary<string, (int, string)>()
         {
-            { "INTEGER", (6, "целое без знака") },
-            { "FLOAT", (7, "вещественное число") },
-            { "NEGATIVE_INTEGER", (8, "целое отрицательное") },
-            { "NEGATIVE_FLOAT", (9, "вещественное отрицательное") },
-            { "EXPONENT_NUMBER", (10, "число с экспонентой") },
-            { "COMPLEX_NUMBER", (11, "комплексное число") },
-            
-            { "IDENTIFIER", (1, "идентификатор") },
-            { "COMPLEX_KEYWORD", (5, "ключевое слово complex") },
-            { "INVALID_KEYWORD", (15, "неправильное ключевое слово") },
-            
-            { "ASSIGN", (3, "оператор присваивания") },
-            { "LPAREN", (4, "разделитель (") },
-            { "RPAREN", (12, "разделитель )") },
-            { "COMMA", (13, "разделитель ,") },
-            { "SEMICOLON", (14, "конец оператора") },
-            { "SPACE", (2, "разделитель (пробел)") },
-            { "PLUS", (16, "оператор сложения") },
-            { "MINUS", (17, "оператор вычитания") },
-            
+            { "INTEGER", (1, "целое без знака") },
+            { "INTEGER_NEGATIVE", (2, "целое отрицательное") },
+            { "FLOAT", (3, "вещественное число") },
+            { "FLOAT_NEGATIVE", (4, "вещественное отрицательное") },
+            { "COMPLEX", (7, "комплексное число") },
+            { "COMPLEX_NEGATIVE", (8, "отрицательное комплексное число") },
+
+            { "IDENTIFIER", (20, "идентификатор") },
+            { "COMPLEX_KEYWORD", (21, "ключевое слово complex") },
+            { "BOOLEAN_LITERAL", (22, "логический литерал") },
+            { "STRING_LITERAL", (23, "строковый литерал") },
+
+            { "ASSIGN", (30, "оператор присваивания") },
+            { "LPAREN", (31, "разделитель (") },
+            { "RPAREN", (32, "разделитель )") },
+            { "COMMA", (33, "разделитель ,") },
+            { "SEMICOLON", (34, "конец оператора") },
+            { "SPACE", (35, "разделитель (пробел)") },
+            { "PLUS", (36, "оператор сложения") },
+            { "MINUS", (37, "оператор вычитания") },
+
             { "ERROR", (99, "недопустимый символ") }
         };
 
@@ -53,11 +54,9 @@ namespace GUIshka
             Start,
             InNumber,
             InFraction,
-            InExponent,
-            InExponentSign,
-            InExponentNumber,
-            InComplexJ,
             InIdentifier,
+            AfterMinus,
+            InComplex,
             Error
         }
 
@@ -76,7 +75,8 @@ namespace GUIshka
             string currentLexeme = "";
             int lexemeStartLine = 1;
             int lexemeStartPos = 0;
-            bool isNegativeNumber = false;
+            bool isNegative = false;
+            bool hasDecimalPoint = false;
 
             string processedText = text + "\n";
 
@@ -89,11 +89,21 @@ namespace GUIshka
                 {
                     if (currentLexeme.Length > 0)
                     {
-                        ProcessComplexLexeme(currentLexeme, lexemeStartLine, lexemeStartPos,
-                            lineNumber, position - 1, lexemes, currentState, isNegativeNumber);
+                        if (currentState == State.InFraction && currentLexeme.EndsWith("."))
+                        {
+                            lexemes.Add(CreateErrorLexeme(currentLexeme, lexemeStartLine, lexemeStartPos,
+                                "Ожидалась цифра после десятичной точки"));
+                        }
+                        else
+                        {
+                            ProcessLexeme(currentLexeme, lexemeStartLine, lexemeStartPos, lineNumber, position - 1,
+                                lexemes, isNegative, hasDecimalPoint, currentState == State.InComplex);
+                        }
+
                         currentLexeme = "";
                         currentState = State.Start;
-                        isNegativeNumber = false;
+                        isNegative = false;
+                        hasDecimalPoint = false;
                     }
 
                     lineNumber++;
@@ -107,7 +117,58 @@ namespace GUIshka
                         lexemeStartLine = lineNumber;
                         lexemeStartPos = position;
 
-                        if (char.IsDigit(c))
+                        if (c == '"')
+                        {
+                            int stringStartLine = lineNumber;
+                            int stringStartPos = position;
+                            string stringValue = "\"";
+                            bool closed = false;
+
+                            int j = i + 1;
+
+                            while (j < processedText.Length)
+                            {
+                                char sc = processedText[j];
+
+                                if (sc == '\n')
+                                {
+                                    break;
+                                }
+
+                                stringValue += sc;
+
+                                if (sc == '"')
+                                {
+                                    closed = true;
+                                    break;
+                                }
+
+                                j++;
+                            }
+
+                            if (closed)
+                            {
+                                lexemes.Add(CreateLexeme(
+                                    lexemeTypes["STRING_LITERAL"],
+                                    stringValue,
+                                    stringStartLine,
+                                    stringStartPos,
+                                    stringStartPos + stringValue.Length - 1));
+
+                                i = j;
+                            }
+                            else
+                            {
+                                lexemes.Add(CreateErrorLexeme(
+                                    stringValue,
+                                    stringStartLine,
+                                    stringStartPos,
+                                    "Незакрытый строковый литерал"));
+
+                                i = j - 1;
+                            }
+                        }
+                        else if (char.IsDigit(c))
                         {
                             currentLexeme += c;
                             currentState = State.InNumber;
@@ -116,7 +177,11 @@ namespace GUIshka
                         {
                             currentLexeme += c;
                             currentState = State.InNumber;
-                            isNegativeNumber = true;
+                            isNegative = true;
+                        }
+                        else if (c == '-')
+                        {
+                            lexemes.Add(CreateLexeme(lexemeTypes["MINUS"], c.ToString(), lineNumber, position, position));
                         }
                         else if (char.IsLetter(c) || c == '_')
                         {
@@ -147,9 +212,14 @@ namespace GUIshka
                         {
                             lexemes.Add(CreateLexeme(lexemeTypes["PLUS"], c.ToString(), lineNumber, position, position));
                         }
-                        else if (c == '-')
+                        else if (c == 'j' || c == 'J')
                         {
-                            lexemes.Add(CreateLexeme(lexemeTypes["MINUS"], c.ToString(), lineNumber, position, position));
+                            lexemes.Add(CreateLexeme(lexemeTypes["COMPLEX"], c.ToString(), lineNumber, position, position));
+                        }
+                        else if (c == '.')
+                        {
+                            lexemes.Add(CreateErrorLexeme(c.ToString(), lineNumber, position,
+                                "Ожидалась цифра перед десятичной точкой"));
                         }
                         else if (char.IsWhiteSpace(c))
                         {
@@ -166,28 +236,48 @@ namespace GUIshka
                         {
                             currentLexeme += c;
                         }
+                        else if (char.IsLetter(c) || c == '_')
+                        {
+                            string invalidIdentifier = currentLexeme + c;
+
+                            while (i + 1 < processedText.Length &&
+                                   (char.IsLetterOrDigit(processedText[i + 1]) || processedText[i + 1] == '_'))
+                            {
+                                i++;
+                                invalidIdentifier += processedText[i];
+                            }
+
+                            lexemes.Add(CreateErrorLexeme(
+                                invalidIdentifier,
+                                lexemeStartLine,
+                                lexemeStartPos,
+                                "Идентификатор не может начинаться с цифры"));
+
+                            currentLexeme = "";
+                            currentState = State.Start;
+                            isNegative = false;
+                            hasDecimalPoint = false;
+                        }
                         else if (c == '.')
                         {
                             currentLexeme += c;
                             currentState = State.InFraction;
-                        }
-                        else if (c == 'e' || c == 'E')
-                        {
-                            currentLexeme += c;
-                            currentState = State.InExponent;
+                            hasDecimalPoint = true;
                         }
                         else if (c == 'j' || c == 'J')
                         {
                             currentLexeme += c;
-                            currentState = State.InComplexJ;
+                            currentState = State.InComplex;
                         }
                         else
                         {
-                            ProcessComplexLexeme(currentLexeme, lexemeStartLine, lexemeStartPos,
-                                lineNumber, position - 1, lexemes, currentState, isNegativeNumber);
+                            ProcessLexeme(currentLexeme, lexemeStartLine, lexemeStartPos, lineNumber, position - 1,
+                                lexemes, isNegative, hasDecimalPoint);
+
                             currentLexeme = "";
                             currentState = State.Start;
-                            isNegativeNumber = false;
+                            isNegative = false;
+                            hasDecimalPoint = false;
                             i--;
                         }
                         break;
@@ -197,101 +287,40 @@ namespace GUIshka
                         {
                             currentLexeme += c;
                         }
-                        else if (c == 'e' || c == 'E')
-                        {
-                            currentLexeme += c;
-                            currentState = State.InExponent;
-                        }
                         else if (c == 'j' || c == 'J')
                         {
                             currentLexeme += c;
-                            currentState = State.InComplexJ;
+                            currentState = State.InComplex;
                         }
                         else
                         {
                             if (currentLexeme.EndsWith("."))
                             {
                                 lexemes.Add(CreateErrorLexeme(currentLexeme, lexemeStartLine, lexemeStartPos,
-                                    $"Недопустимое число: '{currentLexeme}' должно содержать цифры после точки"));
+                                    "Ожидалась цифра после десятичной точки"));
                             }
                             else
                             {
-                                ProcessComplexLexeme(currentLexeme, lexemeStartLine, lexemeStartPos,
-                                    lineNumber, position - 1, lexemes, currentState, isNegativeNumber);
+                                ProcessLexeme(currentLexeme, lexemeStartLine, lexemeStartPos, lineNumber, position - 1,
+                                    lexemes, isNegative, hasDecimalPoint);
                             }
+
                             currentLexeme = "";
                             currentState = State.Start;
-                            isNegativeNumber = false;
+                            isNegative = false;
+                            hasDecimalPoint = false;
                             i--;
                         }
                         break;
 
-                    case State.InExponent:
-                        if (char.IsDigit(c))
-                        {
-                            currentLexeme += c;
-                            currentState = State.InExponentNumber;
-                        }
-                        else if (c == '+' || c == '-')
-                        {
-                            currentLexeme += c;
-                            currentState = State.InExponentSign;
-                        }
-                        else
-                        {
-                            lexemes.Add(CreateErrorLexeme(currentLexeme, lexemeStartLine, lexemeStartPos,
-                                $"Недопустимая запись числа с экспонентой: '{currentLexeme}'"));
-                            currentLexeme = "";
-                            currentState = State.Start;
-                            isNegativeNumber = false;
-                            i--;
-                        }
-                        break;
+                    case State.InComplex:
+                        ProcessLexeme(currentLexeme, lexemeStartLine, lexemeStartPos, lineNumber, position - 1,
+                            lexemes, isNegative, hasDecimalPoint, true);
 
-                    case State.InExponentSign:
-                        if (char.IsDigit(c))
-                        {
-                            currentLexeme += c;
-                            currentState = State.InExponentNumber;
-                        }
-                        else
-                        {
-                            lexemes.Add(CreateErrorLexeme(currentLexeme, lexemeStartLine, lexemeStartPos,
-                                $"Недопустимая запись числа с экспонентой: '{currentLexeme}'"));
-                            currentLexeme = "";
-                            currentState = State.Start;
-                            isNegativeNumber = false;
-                            i--; 
-                        }
-                        break;
-
-                    case State.InExponentNumber:
-                        if (char.IsDigit(c))
-                        {
-                            currentLexeme += c;
-                        }
-                        else if (c == 'j' || c == 'J')
-                        {
-                            currentLexeme += c;
-                            currentState = State.InComplexJ;
-                        }
-                        else
-                        {
-                            ProcessComplexLexeme(currentLexeme, lexemeStartLine, lexemeStartPos,
-                                lineNumber, position - 1, lexemes, currentState, isNegativeNumber);
-                            currentLexeme = "";
-                            currentState = State.Start;
-                            isNegativeNumber = false;
-                            i--;
-                        }
-                        break;
-
-                    case State.InComplexJ:
-                        ProcessComplexLexeme(currentLexeme, lexemeStartLine, lexemeStartPos,
-                            lineNumber, position - 1, lexemes, currentState, isNegativeNumber);
                         currentLexeme = "";
                         currentState = State.Start;
-                        isNegativeNumber = false;
+                        isNegative = false;
+                        hasDecimalPoint = false;
                         i--;
                         break;
 
@@ -300,12 +329,30 @@ namespace GUIshka
                         {
                             currentLexeme += c;
                         }
-                        else
+                        else if (char.IsWhiteSpace(c))
                         {
                             ProcessIdentifier(currentLexeme, lexemeStartLine, lexemeStartPos, lineNumber, position - 1, lexemes);
+
                             currentLexeme = "";
                             currentState = State.Start;
                             i--;
+                        }
+                        else if (IsIdentifierErrorDelimiter(c))
+                        {
+                            ProcessIdentifier(currentLexeme, lexemeStartLine, lexemeStartPos, lineNumber, position - 1, lexemes);
+
+                            currentLexeme = "";
+                            currentState = State.Start;
+                            i--;
+                        }
+                        else
+                        {
+                            ProcessIdentifier(currentLexeme, lexemeStartLine, lexemeStartPos, lineNumber, position - 1, lexemes);
+
+                            lexemes.Add(CreateErrorLexeme(c.ToString(), lineNumber, position, $"Недопустимый символ '{c}'"));
+
+                            currentLexeme = "";
+                            currentState = State.Start;
                         }
                         break;
                 }
@@ -316,45 +363,17 @@ namespace GUIshka
 
         private bool IsNextCharDigit(string text, int nextIndex)
         {
-            return nextIndex < text.Length && char.IsDigit(text[nextIndex]);
+            if (nextIndex < text.Length)
+            {
+                return char.IsDigit(text[nextIndex]);
+            }
+
+            return false;
         }
 
-        private void ProcessComplexLexeme(string lexeme, int startLine, int startPos, int endLine, int endPos,
-            List<Lexeme> lexemes, State state, bool isNegative)
+        private bool IsIdentifierErrorDelimiter(char c)
         {
-            if (string.IsNullOrEmpty(lexeme))
-                return;
-
-            if (state == State.InComplexJ)
-            {
-                lexemes.Add(CreateLexeme(lexemeTypes["COMPLEX_NUMBER"], lexeme, startLine, startPos, endPos));
-            }
-            else if (state == State.InExponentNumber || state == State.InExponent)
-            {
-                lexemes.Add(CreateLexeme(lexemeTypes["EXPONENT_NUMBER"], lexeme, startLine, startPos, endPos));
-            }
-            else if (lexeme.Contains("."))
-            {
-                if (isNegative)
-                {
-                    lexemes.Add(CreateLexeme(lexemeTypes["NEGATIVE_FLOAT"], lexeme, startLine, startPos, endPos));
-                }
-                else
-                {
-                    lexemes.Add(CreateLexeme(lexemeTypes["FLOAT"], lexeme, startLine, startPos, endPos));
-                }
-            }
-            else
-            {
-                if (isNegative)
-                {
-                    lexemes.Add(CreateLexeme(lexemeTypes["NEGATIVE_INTEGER"], lexeme, startLine, startPos, endPos));
-                }
-                else
-                {
-                    lexemes.Add(CreateLexeme(lexemeTypes["INTEGER"], lexeme, startLine, startPos, endPos));
-                }
-            }
+            return c == '=' || c == '(' || c == ')' || c == ',' || c == ';';
         }
 
         private void ProcessIdentifier(string lexeme, int startLine, int startPos, int endLine, int endPos,
@@ -367,10 +386,10 @@ namespace GUIshka
             {
                 lexemes.Add(CreateLexeme(lexemeTypes["COMPLEX_KEYWORD"], lexeme, startLine, startPos, endPos));
             }
-            else if (IsSimilarToComplex(lexeme))
+            else if (string.Equals(lexeme, "true", StringComparison.OrdinalIgnoreCase) ||
+                     string.Equals(lexeme, "false", StringComparison.OrdinalIgnoreCase))
             {
-                lexemes.Add(CreateErrorLexeme(lexeme, startLine, startPos,
-                    $"Неправильное написание ключевого слова: '{lexeme}'. Правильно: '{CORRECT_COMPLEX}'"));
+                lexemes.Add(CreateLexeme(lexemeTypes["BOOLEAN_LITERAL"], lexeme, startLine, startPos, endPos));
             }
             else
             {
@@ -378,59 +397,53 @@ namespace GUIshka
             }
         }
 
-        private bool IsSimilarToComplex(string word)
+        private void ProcessLexeme(string lexeme, int startLine, int startPos, int endLine, int endPos,
+            List<Lexeme> lexemes, bool isNegative = false, bool hasDecimalPoint = false,
+            bool isComplex = false)
         {
-            if (string.IsNullOrEmpty(word) || word.Length < 3)
-                return false;
+            if (string.IsNullOrEmpty(lexeme))
+                return;
 
-            word = word.ToLower();
-
-            bool startsWithC = word.StartsWith("c");
-            bool endsWithX = word.EndsWith("x");
-            bool hasAppropriateLength = word.Length >= 5 && word.Length <= 8;
-
-            bool hasCommonLetters = word.Contains("o") && word.Contains("m") && word.Contains("p");
-
-            return (startsWithC && endsWithX && hasAppropriateLength) ||
-                   (hasCommonLetters && hasAppropriateLength) ||
-                   (word.Length == 7 && ComputeSimilarity(word, CORRECT_COMPLEX) > 0.5); 
-        }
-
-        private double ComputeSimilarity(string s1, string s2)
-        {
-            if (string.IsNullOrEmpty(s1) || string.IsNullOrEmpty(s2))
-                return 0;
-
-            int maxLength = Math.Max(s1.Length, s2.Length);
-            if (maxLength == 0)
-                return 1;
-
-            int distance = LevenshteinDistance(s1, s2);
-            return 1.0 - (double)distance / maxLength;
-        }
-
-        private int LevenshteinDistance(string s1, string s2)
-        {
-            int[,] dp = new int[s1.Length + 1, s2.Length + 1];
-
-            for (int i = 0; i <= s1.Length; i++)
-                dp[i, 0] = i;
-
-            for (int j = 0; j <= s2.Length; j++)
-                dp[0, j] = j;
-
-            for (int i = 1; i <= s1.Length; i++)
+            if (lexeme == "-" || lexeme == "+" || lexeme == ".")
             {
-                for (int j = 1; j <= s2.Length; j++)
-                {
-                    int cost = (s1[i - 1] == s2[j - 1]) ? 0 : 1;
-                    dp[i, j] = Math.Min(
-                        Math.Min(dp[i - 1, j] + 1, dp[i, j - 1] + 1),
-                        dp[i - 1, j - 1] + cost);
-                }
+                lexemes.Add(CreateErrorLexeme(lexeme, startLine, startPos,
+                    $"Ожидалось число, но найдено '{lexeme}'"));
+                return;
             }
 
-            return dp[s1.Length, s2.Length];
+            if (isComplex)
+            {
+                if (isNegative || (lexeme.StartsWith("-") && lexeme.Length > 1))
+                {
+                    lexemes.Add(CreateLexeme(lexemeTypes["COMPLEX_NEGATIVE"], lexeme, startLine, startPos, endPos));
+                }
+                else
+                {
+                    lexemes.Add(CreateLexeme(lexemeTypes["COMPLEX"], lexeme, startLine, startPos, endPos));
+                }
+            }
+            else if (hasDecimalPoint)
+            {
+                if (isNegative || (lexeme.StartsWith("-") && lexeme.Length > 1))
+                {
+                    lexemes.Add(CreateLexeme(lexemeTypes["FLOAT_NEGATIVE"], lexeme, startLine, startPos, endPos));
+                }
+                else
+                {
+                    lexemes.Add(CreateLexeme(lexemeTypes["FLOAT"], lexeme, startLine, startPos, endPos));
+                }
+            }
+            else
+            {
+                if (isNegative || (lexeme.StartsWith("-") && lexeme.Length > 1))
+                {
+                    lexemes.Add(CreateLexeme(lexemeTypes["INTEGER_NEGATIVE"], lexeme, startLine, startPos, endPos));
+                }
+                else
+                {
+                    lexemes.Add(CreateLexeme(lexemeTypes["INTEGER"], lexeme, startLine, startPos, endPos));
+                }
+            }
         }
 
         private Lexeme CreateLexeme((int Code, string Type) typeInfo, string value, int line, int startPos, int endPos)
