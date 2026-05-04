@@ -257,7 +257,8 @@ z3 = complex(4, 5.75);
 <EQUALS> -> '=' <COMPLEX>
 <COMPLEX> -> 'complex' <LPAREN>
 <LPAREN> -> '(' <OPERAND1>
-<OPERAND1> -> <INT> <COMMA>
+<OPERAND1> -> <NUM> <COMMA>
+<NUM> -> 
 <INT> -> '1'
 <OPERAND1> -> <MINUS_INT> <COMMA>
 <MINUS_INT> -> '-1'
@@ -282,6 +283,9 @@ z3 = complex(4, 5.75);
 Vt = {a....z, A....Z, 0....9, =, (, ), ,, ;, -}
 
 Vn = {<ID>, <EQUALS>, <COMPLEX>, <LPAREN>, <OPERAND1>, <COMMA>, <OPERAND2>, <RPAREN>, <SEMICOLON>, <MINUS_INT>, <INT>, <FLOAT>, <MINUS_FLOAT>}
+letter = A | B | C | ... | Z | a | b | c | ... | z
+digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+id — это идентификатор: имя типа или имя элемента перечисления.
 ```
 
 **Классификация грамматики**
