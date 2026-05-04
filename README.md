@@ -257,23 +257,31 @@ z3 = complex(4, 5.75);
 <EQUALS> -> '=' <COMPLEX>
 <COMPLEX> -> 'complex' <LPAREN>
 <LPAREN> -> '(' <OPERAND1>
-<OPERAND1> -> '1' <COMMA>
-<OPERAND1> -> '-1' <COMMA>
-<OPERAND1> -> '1.2> <COMMA>
-<OPERAND1> -> '-1.2' <COMMA>
-<OPERAND1> -> 'a' <COMMA>
+<OPERAND1> -> <INT> <COMMA>
+<INT> -> '1'
+<OPERAND1> -> <MINUS_INT> <COMMA>
+<MINUS_INT> -> '-1'
+<OPERAND1> -> <FLOAT> <COMMA>
+<FLOAT> -> '1.2'
+<OPERAND1> -> <MINUS_FLOAT> <COMMA>
+<MINUS_FLOAT> -> '-1.2'
+<OPERAND1> -> <ID> <COMMA>
 <COMMA> -> ',' <OPERAND2>
-<OPERAND2> -> '2' <RPAREN>
-<OPERAND2> -> '-2' <RPAREN>
-<OPERAND2> -> '2.1' <RPAREN>
-<OPERAND2> -> '-2.1' <RPAREN>
-<OPERAND2> -> 'b' <RPAREN>
+<OPERAND2> -> <INT> <RPAREN>
+<INT> -> '1'
+<OPERAND2> -> <MINUS_INT> <RPAREN>
+<MINUS_INT> -> '-1'
+<OPERAND2> -> <FLOAT> <RPAREN>
+<FLOAT> -> '1.2'
+<OPERAND2> -> <MINUS_FLOAT> <RPAREN>
+<MINUS_FLOAT> -> '-1.2'
+<OPERAND2> -> <ID> <RPAREN>
 <RPAREN> -> ')' <SEMICOLON>
 <SEMICOLON> -> ';'
 
-Vt = {a....z, A....Z, 0....9, =, (, ), ,, ;}
+Vt = {a....z, A....Z, 0....9, =, (, ), ,, ;, -}
 
-Vn = {<ID>, <EQUALS>, <COMPLEX>, <LPAREN>, <OPERAND1>, <COMMA>, <OPERAND2>, <RPAREN>, <SEMICOLON>}
+Vn = {<ID>, <EQUALS>, <COMPLEX>, <LPAREN>, <OPERAND1>, <COMMA>, <OPERAND2>, <RPAREN>, <SEMICOLON>, <MINUS_INT>, <INT>, <FLOAT>, <MINUS_FLOAT>}
 ```
 
 **Классификация грамматики**
