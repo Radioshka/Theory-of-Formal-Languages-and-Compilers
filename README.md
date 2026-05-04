@@ -258,31 +258,22 @@ z3 = complex(4, 5.75);
 <COMPLEX> -> 'complex' <LPAREN>
 <LPAREN> -> '(' <OPERAND1>
 <OPERAND1> -> <NUM> <COMMA>
-<NUM> -> 
-<INT> -> '1'
-<OPERAND1> -> <MINUS_INT> <COMMA>
-<MINUS_INT> -> '-1'
-<OPERAND1> -> <FLOAT> <COMMA>
-<FLOAT> -> '1.2'
-<OPERAND1> -> <MINUS_FLOAT> <COMMA>
-<MINUS_FLOAT> -> '-1.2'
+<NUM> -> <INT> | <MINUS_INT> | <FLOAT> | <MINUS_FLOAT
 <OPERAND1> -> <ID> <COMMA>
 <COMMA> -> ',' <OPERAND2>
-<OPERAND2> -> <INT> <RPAREN>
-<INT> -> '1'
-<OPERAND2> -> <MINUS_INT> <RPAREN>
-<MINUS_INT> -> '-1'
-<OPERAND2> -> <FLOAT> <RPAREN>
-<FLOAT> -> '1.2'
-<OPERAND2> -> <MINUS_FLOAT> <RPAREN>
-<MINUS_FLOAT> -> '-1.2'
+<OPERAND2> -> <NUM> <RPAREN>
+<NUM> -> <INT> | <MINUS_INT> | <FLOAT> | <MINUS_FLOAT
 <OPERAND2> -> <ID> <RPAREN>
 <RPAREN> -> ')' <SEMICOLON>
 <SEMICOLON> -> ';'
 
 Vt = {a....z, A....Z, 0....9, =, (, ), ,, ;, -}
 
-Vn = {<ID>, <EQUALS>, <COMPLEX>, <LPAREN>, <OPERAND1>, <COMMA>, <OPERAND2>, <RPAREN>, <SEMICOLON>, <MINUS_INT>, <INT>, <FLOAT>, <MINUS_FLOAT>}
+Vn = {<ID>, <EQUALS>, <COMPLEX>, <LPAREN>, <OPERAND1>, <NUM>, <COMMA>, <OPERAND2>, <RPAREN>, <SEMICOLON>, <MINUS_INT>, <INT>, <FLOAT>, <MINUS_FLOAT>}
+INTEGER           — целое число без знака
+INTEGER_NEGATIVE  — отрицательное целое число
+FLOAT             — вещественное число без знака
+FLOAT_NEGATIVE    — отрицательное вещественное число
 letter = A | B | C | ... | Z | a | b | c | ... | z
 digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 id — это идентификатор: имя типа или имя элемента перечисления.
