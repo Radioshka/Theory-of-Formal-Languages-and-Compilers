@@ -253,37 +253,42 @@ z3 = complex(4, 5.75);
 Терминальные символы грамматики:
 
 ```
-1.  <START> -> <ID> <EQUALS>
-2.  <ID> -> identifier <EQUALS>
-3.  <EQUALS> -> '=' <COMPLEX>
-4.  <COMPLEX> -> 'complex' <LPAREN>
-5.  <LPAREN> -> '(' <OPERAND1>
-6.  <OPERAND1> -> number <COMMA>
-7.  <OPERAND1> -> identifier <COMMA>
-8.  <COMMA> -> ',' <OPERAND2>
-9.  <OPERAND2> -> number <RPAREN>
-10. <OPERAND2> -> identifier <RPAREN>
-11. <RPAREN> -> ')' <SEMICOLON>
-12. <SEMICOLON> -> ';'
+<ID> -> 'z1' <EQUALS>
+<EQUALS> -> '=' <COMPLEX>
+<COMPLEX> -> 'complex' <LPAREN>
+<LPAREN> -> '(' <OPERAND1>
+<OPERAND1> -> '1' <COMMA>
+<OPERAND1> -> '-1' <COMMA>
+<OPERAND1> -> '1.2> <COMMA>
+<OPERAND1> -> '-1.2' <COMMA>
+<OPERAND1> -> 'a' <COMMA>
+<COMMA> -> ',' <OPERAND2>
+<OPERAND2> -> '2' <RPAREN>
+<OPERAND2> -> '-2' <RPAREN>
+<OPERAND2> -> '2.1' <RPAREN>
+<OPERAND2> -> '-2.1' <RPAREN>
+<OPERAND2> -> 'b' <RPAREN>
+<RPAREN> -> ')' <SEMICOLON>
+<SEMICOLON> -> ';'
 
-Vt = {identifier, a....z, A....Z, 0....9, number, =, complex, (, ), ,, ;}
+Vt = {a....z, A....Z, 0....9, =, (, ), ,, ;}
 
-Vn = {<START>, <ID>, <EQUALS>, <COMPLEX>, <LPAREN>, <OPERAND1>, <COMMA>, <OPERAND2>, <RPAREN>, <SEMICOLON>}
+Vn = {<ID>, <EQUALS>, <COMPLEX>, <LPAREN>, <OPERAND1>, <COMMA>, <OPERAND2>, <RPAREN>, <SEMICOLON>}
 ```
 
 **Классификация грамматики**
 
-Разработанная грамматика относится к контекстно-свободным грамматикам, то есть к грамматикам типа 2 по классификации Хомского.
+Разработанная грамматика относится к автоматным грамматикам.
 
-Это объясняется тем, что каждое правило грамматики имеет вид:
+<p align="center">
+  <img width="288" height="23" alt="image" src="https://github.com/user-attachments/assets/27dbc0f6-ccc0-4af3-b05f-02d5bd6cbb38" />
+</p>
 
-A -> α
+Согласно учебнику, правила вывода автоматной грамматики имеют вид:
 
-где A — один нетерминальный символ, а α — цепочка терминальных и/или нетерминальных символов.
-
-В левой части каждого правила находится один нетерминальный символ, поэтому применение правил не зависит от контекста. Следовательно, грамматика является контекстно-свободной.
-
-Также данную грамматику можно рассматривать как праволинейную, так как в правой части правил нетерминальный символ расположен справа. Однако в рамках синтаксического анализа она используется как простая контекстно-свободная грамматика, пригодная для реализации методом последовательного нисходящего анализа.
+<p align="center">
+    <img width="448" height="92" alt="image" src="https://github.com/user-attachments/assets/b2e05c06-1387-419e-b7eb-6846b0446bbd" />
+</p>
 
 **Метод анализа**
 
