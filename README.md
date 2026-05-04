@@ -263,6 +263,7 @@ z3 = complex(4, 5.75);
 <OPERAND1> -> <FLOAT> <COMMA>
 <OPERAND1> -> <ID_NUM> <COMMA>
 <COMMA> -> ',' <OPERAND2>
+<COMMA> -> ',' <MINUS>
 <MINUS> -> '-' <OPERAND2>
 <OPERAND2> -> <INT> <RPAREN>
 <OPERAND2> -> <FLOAT> <RPAREN>
