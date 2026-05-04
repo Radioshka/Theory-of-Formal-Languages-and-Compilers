@@ -253,23 +253,27 @@ z3 = complex(4, 5.75);
 Терминальные символы грамматики:
 
 ```
-<ID> -> 'z1' <EQUALS>
+<ID> -> <ID_COM> <EQUALS>
 <EQUALS> -> '=' <COMPLEX>
 <COMPLEX> -> 'complex' <LPAREN>
 <LPAREN> -> '(' <OPERAND1>
-<OPERAND1> -> <NUM> <COMMA>
-<NUM> -> <INT> | <MINUS_INT> | <FLOAT> | <MINUS_FLOAT
-<OPERAND1> -> <ID> <COMMA>
+<OPERAND1> -> <INT> <COMMA>
+<OPERAND1> -> <MINUS_INT> <COMMA>
+<OPERAND1> -> <FLOAT> <COMMA>
+<OPERAND1> -> <MINUS_FLOAT> <COMMA>
+<OPERAND1> -> <ID_NUM> <COMMA>
 <COMMA> -> ',' <OPERAND2>
-<OPERAND2> -> <NUM> <RPAREN>
-<NUM> -> <INT> | <MINUS_INT> | <FLOAT> | <MINUS_FLOAT
-<OPERAND2> -> <ID> <RPAREN>
+<OPERAND2> -> <INT> <RPAREN>
+<OPERAND2> -> <MINUS_INT> <RPAREN>
+<OPERAND2> -> <FLOAT> <RPAREN>
+<OPERAND2> -> <MINUS_FLOAT> <RPAREN>
+<OPERAND2> -> <ID_NUM> <RPAREN>
 <RPAREN> -> ')' <SEMICOLON>
 <SEMICOLON> -> ';'
 
 Vt = {a....z, A....Z, 0....9, =, (, ), ,, ;, -}
 
-Vn = {<ID>, <EQUALS>, <COMPLEX>, <LPAREN>, <OPERAND1>, <NUM>, <COMMA>, <OPERAND2>, <RPAREN>, <SEMICOLON>, <MINUS_INT>, <INT>, <FLOAT>, <MINUS_FLOAT>}
+Vn = {<ID>, <ID_COM>, <EQUALS>, <COMPLEX>, <LPAREN>, <OPERAND1>, <NUM>, <COMMA>, <OPERAND2>, <ID_NUM>, <RPAREN>, <SEMICOLON>, <MINUS_INT>, <INT>, <FLOAT>, <MINUS_FLOAT>}
 INTEGER           — целое число без знака
 INTEGER_NEGATIVE  — отрицательное целое число
 FLOAT             — вещественное число без знака
