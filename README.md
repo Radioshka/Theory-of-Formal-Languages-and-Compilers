@@ -274,9 +274,7 @@ Vt = {a....z, A....Z, 0....9, =, (, ), ,, ;, -}
 
 Vn = {<ID>, <ID_COM>, <EQUALS>, <COMPLEX>, <LPAREN>, <OPERAND1>, <MINUS>, <COMMA>, <OPERAND2>, <ID_NUM>, <RPAREN>, <SEMICOLON>, <INT>, <FLOAT>}
 INTEGER           — целое число без знака
-INTEGER_NEGATIVE  — отрицательное целое число
 FLOAT             — вещественное число без знака
-FLOAT_NEGATIVE    — отрицательное вещественное число
 letter = A | B | C | ... | Z | a | b | c | ... | z
 digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 id — это идентификатор: имя типа или имя элемента перечисления.
