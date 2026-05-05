@@ -253,32 +253,30 @@ z3 = complex(4, 5.75);
 Терминальные символы грамматики:
 
 ```
-<ID> -> <ID_COM> <EQUALS>
+<ID> -> identifier <EQUALS>
 <EQUALS> -> '=' <COMPLEX>
 <COMPLEX> -> 'complex' <LPAREN>
 <LPAREN> -> '(' <OPERAND1>
-<LPAREN> -> '(' <MINUS>
-<MINUS> -> '-' <OPERAND1>
-<OPERAND1> -> <INT> <COMMA>
-<OPERAND1> -> <FLOAT> <COMMA>
-<OPERAND1> -> <ID_NUM> <COMMA>
+<OPERAND1> -> <NUMBER> <COMMA>
+<OPERAND1> -> identifier <COMMA>
 <COMMA> -> ',' <OPERAND2>
-<COMMA> -> ',' <MINUS>
-<MINUS> -> '-' <OPERAND2>
-<OPERAND2> -> <INT> <RPAREN>
-<OPERAND2> -> <FLOAT> <RPAREN>
-<OPERAND2> -> <ID_NUM> <RPAREN>
+<OPERAND2> -> <NUMBER> <RPAREN>
+<OPERAND2> -> identifier <RPAREN>
 <RPAREN> -> ')' <SEMICOLON>
 <SEMICOLON> -> ';'
+<NUMBER> -> ‘-‘ <UNSIGNED_NUM>
+<NUMBER> -> <UNSIGNED_NUM>
+<UNSIGNED_NUM> -> integer
+<UNSIGNED_NUM> -> float
 
 Vt = {a....z, A....Z, 0....9, =, (, ), ,, ;, -}
 
-Vn = {<ID>, <ID_COM>, <EQUALS>, <COMPLEX>, <LPAREN>, <OPERAND1>, <MINUS>, <COMMA>, <OPERAND2>, <ID_NUM>, <RPAREN>, <SEMICOLON>, <INT>, <FLOAT>}
-INTEGER           — целое число без знака
-FLOAT             — вещественное число без знака
+Vn = {<ID>, <EQUALS>, <COMPLEX>, <LPAREN>, <OPERAND1>, <NUMBER>, <COMMA>, <OPERAND2>, <RPAREN>, <SEMICOLON>, <UNSIGNED_NUM>}
+integer — целое число без знака
+float — вещественное число с знаком
 letter = A | B | C | ... | Z | a | b | c | ... | z
 digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
-id — это идентификатор: имя типа или имя элемента перечисления.
+identifier — это идентификатор: имя типа или имя элемента перечисления.
 ```
 
 **Классификация грамматики**
