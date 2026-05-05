@@ -264,7 +264,7 @@ z3 = complex(4, 5.75);
 <OPERAND2> -> identifier <RPAREN>
 <RPAREN> -> ')' <SEMICOLON>
 <SEMICOLON> -> ';'
-<NUMBER> -> ‘-‘ <UNSIGNED_NUM>
+<NUMBER> -> '-' <UNSIGNED_NUM>
 <NUMBER> -> <UNSIGNED_NUM>
 <UNSIGNED_NUM> -> integer
 <UNSIGNED_NUM> -> float
