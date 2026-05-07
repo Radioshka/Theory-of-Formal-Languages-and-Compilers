@@ -272,8 +272,6 @@ z3 = complex(4, 5.75);
 Vt = {a....z, A....Z, 0....9, =, (, ), ,, ;, -}
 
 Vn = {<ID>, <EQUALS>, <COMPLEX>, <LPAREN>, <OPERAND1>, <OPERAND2>, <RPAREN>, <SEMICOLON>, <INT1>, <INTREM1>, <FLOAT1>, <FLOATREM1>, <INT2>, <INTREM2>, <FLOAT2>, <FLOATREM2>}
-integer — целое число без знака
-float — вещественное число с знаком
 letter = A | B | C | ... | Z | a | b | c | ... | z
 digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 identifier — это идентификатор: имя типа или имя элемента перечисления.
@@ -304,7 +302,7 @@ identifier — это идентификатор: имя типа или имя 
 **Схема метода анализа**
 
 <p align="center">
-  <img src="images/lab3/gramatik.png" alt="-"/>
+  <img width="1121" height="626" alt="gramatik3" src="https://github.com/user-attachments/assets/2c68efd9-aeb8-41fd-81bf-b3b859e37c43" />
 </p>
 
 **Диагностика и нейтрализация синтаксических ошибок**
