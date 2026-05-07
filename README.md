@@ -253,25 +253,25 @@ z3 = complex(4, 5.75);
 Терминальные символы грамматики:
 
 ```
-<ID> -> identifier <EQUALS>
-<EQUALS> -> '=' <COMPLEX>
-<COMPLEX> -> 'complex' <LPAREN>
+<START> -> letter <ID>
+<ID> -> letter <ID> | digit <ID> | '_' <ID> | '=' <EQUALS>
+<EQUALS> -> 'complex' <LPAREN>
 <LPAREN> -> '(' <OPERAND1>
-<OPERAND1> -> <NUMBER> <COMMA>
-<OPERAND1> -> identifier <COMMA>
-<COMMA> -> ',' <OPERAND2>
-<OPERAND2> -> <NUMBER> <RPAREN>
-<OPERAND2> -> identifier <RPAREN>
+<OPERAND1> -> '-' <INT1> | digit <INTREM1>
+<INT1> -> digit <INTREM1>
+<INTREM1> -> digit <INTREM1> | ',' <OPERAND2> | '.' <FLOAT1>
+<FLOAT1> -> digit <FLOATREM1>
+<FLOATREM1> -> digit <FLOATREM1> | ',' <OPERAND2>
+<OPERAND2> -> '-' <INT2> | digit <INTREM2>
+<INT2> -> digit <INTREM2>
+<INTREM2> -> digit <INTREM2> | ')' <RPAREN> | '.' <FLOAT2>
+<FLOAT2> -> digit <FLOATREM2> | ')' <RPAREN>
 <RPAREN> -> ')' <SEMICOLON>
 <SEMICOLON> -> ';'
-<NUMBER> -> '-' <UNSIGNED_NUM>
-<NUMBER> -> <UNSIGNED_NUM>
-<UNSIGNED_NUM> -> integer
-<UNSIGNED_NUM> -> float
 
 Vt = {a....z, A....Z, 0....9, =, (, ), ,, ;, -}
 
-Vn = {<ID>, <EQUALS>, <COMPLEX>, <LPAREN>, <OPERAND1>, <NUMBER>, <COMMA>, <OPERAND2>, <RPAREN>, <SEMICOLON>, <UNSIGNED_NUM>}
+Vn = {<ID>, <EQUALS>, <COMPLEX>, <LPAREN>, <OPERAND1>, <OPERAND2>, <RPAREN>, <SEMICOLON>, <INT1>, <INTREM1>, <FLOAT1>, <FLOATREM1>, <INT2>, <INTREM2>, <FLOAT2>, <FLOATREM2>}
 integer — целое число без знака
 float — вещественное число с знаком
 letter = A | B | C | ... | Z | a | b | c | ... | z
