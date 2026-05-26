@@ -775,10 +775,40 @@ a + b * c
 **Диаграмма лексера**
 
 <p align="center">
-    
+    <img width="351" height="909" alt="лексер арифмет" src="https://github.com/user-attachments/assets/2fe31cf2-a9ff-46b8-8c09-cfc45ec43f77" />
 </p>
 
 **Схема рекурсивного спуска для парсера**
+
+<p align="center">
+    <img width="211" height="281" alt="схема парсера" src="https://github.com/user-attachments/assets/9be56725-7fa1-4ed4-b904-03b0507a5ee1" />
+</p>
+
+**Скриншоты работы программы**
+
+<p align="center">
+    <img width="1017" height="538" alt="image" src="https://github.com/user-attachments/assets/2910aca5-067e-4d4e-8506-ce76b7114eeb" />
+</p>
+
+<p align="center">
+    <img width="1019" height="539" alt="image" src="https://github.com/user-attachments/assets/1663f557-83e3-4745-b326-ab4e12c22d1f" />
+</p>
+
+<p align="center">
+    <img width="1019" height="542" alt="image" src="https://github.com/user-attachments/assets/40644b15-6060-4c93-9a3a-8c626d9a8355" />
+</p>
+
+**Таблица тетрад**
+
+<p align="center">
+    <img width="436" height="227" alt="image" src="https://github.com/user-attachments/assets/16414346-5cd9-416c-9751-7ea527948482" />
+</p>
+
+**ПОЛИЗ**
+
+<p align="center">
+    <img width="402" height="58" alt="image" src="https://github.com/user-attachments/assets/c2fadcf7-263e-4e77-afa5-3fc2b73a17fe" />
+</p>
 
 ## Лабораторная работа 7. Анализ и преобразование кода с использованием Clang и LLVM
 
