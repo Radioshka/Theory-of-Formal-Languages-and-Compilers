@@ -2,16 +2,8 @@ namespace GUIshka
 {
     partial class MainForm
     {
-        /// <summary>
-        /// Обязательная переменная конструктора.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-
-        /// <summary>
-        /// Освободить все используемые ресурсы.
-        /// </summary>
-        /// <param name="disposing">истинно, если управляемый ресурс должен быть удален; иначе ложно.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -21,24 +13,21 @@ namespace GUIshka
             base.Dispose(disposing);
         }
 
-        #region Код, автоматически созданный конструктором форм Windows
-
-
-        /// <summary>
-        /// Требуемый метод для поддержки конструктора — не изменяйте 
-        /// содержимое этого метода с помощью редактора кода.
-        /// </summary>
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+
+            this.richTextBoxAst = new System.Windows.Forms.RichTextBox();
+
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.создатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.открытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьКакToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.правкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отменитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,7 +47,11 @@ namespace GUIshka
             this.пускToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.вызовСправкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.языкToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.русскийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.englishToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+
             this.toolStripPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.CreateButton = new System.Windows.Forms.Button();
             this.OpenButton = new System.Windows.Forms.Button();
@@ -69,12 +62,14 @@ namespace GUIshka
             this.CutButton = new System.Windows.Forms.Button();
             this.InputButton = new System.Windows.Forms.Button();
             this.AnalisButton = new System.Windows.Forms.Button();
+            this.AnalisExprButton = new System.Windows.Forms.Button();
             this.RefButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.tabControlMain = new System.Windows.Forms.TabControl();
+
             this.tabPageErrors = new System.Windows.Forms.TabPage();
             this.tabPageAst = new System.Windows.Forms.TabPage();
-            this.richTextBoxAst = new System.Windows.Forms.RichTextBox();
+            this.tabControlMain = new System.Windows.Forms.TabControl();
+
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControlMain.SuspendLayout();
             this.tabPageErrors.SuspendLayout();
@@ -82,10 +77,49 @@ namespace GUIshka
             this.menuStrip1.SuspendLayout();
             this.toolStripPanel.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tabControlMain
-            // 
-            this.tabControlMain.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(4, 4);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowHeadersWidth = 51;
+            this.dataGridView1.Size = new System.Drawing.Size(1305, 359);
+            this.dataGridView1.TabIndex = 0;
+
+            this.richTextBoxAst.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoxAst.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.richTextBoxAst.Location = new System.Drawing.Point(4, 4);
+            this.richTextBoxAst.Margin = new System.Windows.Forms.Padding(4);
+            this.richTextBoxAst.Name = "richTextBoxAst";
+            this.richTextBoxAst.ReadOnly = true;
+            this.richTextBoxAst.Size = new System.Drawing.Size(1305, 359);
+            this.richTextBoxAst.TabIndex = 0;
+            this.richTextBoxAst.Text = "";
+
+            this.tabPageErrors.Controls.Add(this.dataGridView1);
+            this.tabPageErrors.Location = new System.Drawing.Point(4, 25);
+            this.tabPageErrors.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPageErrors.Name = "tabPageErrors";
+            this.tabPageErrors.Padding = new System.Windows.Forms.Padding(4);
+            this.tabPageErrors.Size = new System.Drawing.Size(1313, 367);
+            this.tabPageErrors.TabIndex = 0;
+            this.tabPageErrors.Text = "Ошибки";
+
+            this.tabPageAst.Controls.Add(this.richTextBoxAst);
+            this.tabPageAst.Location = new System.Drawing.Point(4, 25);
+            this.tabPageAst.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPageAst.Name = "tabPageAst";
+            this.tabPageAst.Padding = new System.Windows.Forms.Padding(4);
+            this.tabPageAst.Size = new System.Drawing.Size(1313, 367);
+            this.tabPageAst.TabIndex = 1;
+            this.tabPageAst.Text = "AST / JSON";
+
+            this.tabControlMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControlMain.Controls.Add(this.tabPageErrors);
             this.tabControlMain.Controls.Add(this.tabPageAst);
@@ -95,68 +129,8 @@ namespace GUIshka
             this.tabControlMain.SelectedIndex = 0;
             this.tabControlMain.Size = new System.Drawing.Size(1321, 396);
             this.tabControlMain.TabIndex = 15;
-            // 
-            // tabPageErrors
-            // 
-            this.tabPageErrors.Controls.Add(this.dataGridView1);
-            this.tabPageErrors.Location = new System.Drawing.Point(4, 25);
-            this.tabPageErrors.Margin = new System.Windows.Forms.Padding(4);
-            this.tabPageErrors.Name = "tabPageErrors";
-            this.tabPageErrors.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPageErrors.Size = new System.Drawing.Size(1313, 367);
-            this.tabPageErrors.TabIndex = 0;
-            this.tabPageErrors.Text = "Ошибки";
-            // 
-            // tabPageAst
-            // 
-            this.tabPageAst.Controls.Add(this.richTextBoxAst);
-            this.tabPageAst.Location = new System.Drawing.Point(4, 25);
-            this.tabPageAst.Margin = new System.Windows.Forms.Padding(4);
-            this.tabPageAst.Name = "tabPageAst";
-            this.tabPageAst.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPageAst.Size = new System.Drawing.Size(1313, 367);
-            this.tabPageAst.TabIndex = 1;
-            this.tabPageAst.Text = "AST / JSON";
-            // 
-            // richTextBoxAst
-            // 
-            this.richTextBoxAst.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBoxAst.Font = new System.Drawing.Font("Consolas", 10F);
-            this.richTextBoxAst.Location = new System.Drawing.Point(4, 4);
-            this.richTextBoxAst.Margin = new System.Windows.Forms.Padding(4);
-            this.richTextBoxAst.Name = "richTextBoxAst";
-            this.richTextBoxAst.ReadOnly = true;
-            this.richTextBoxAst.Size = new System.Drawing.Size(1305, 359);
-            this.richTextBoxAst.TabIndex = 0;
-            this.richTextBoxAst.Text = "";
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.TabIndex = 0;
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.richTextBox1.Location = new System.Drawing.Point(16, 123);
-            this.richTextBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(1320, 82);
-            this.richTextBox1.TabIndex = 1;
-            this.richTextBox1.Text = "";
-            // 
-            // menuStrip1
-            // 
+            this.tabControlMain.Visible = false;
+
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.файлToolStripMenuItem,
@@ -169,51 +143,48 @@ namespace GUIshka
             this.menuStrip1.Size = new System.Drawing.Size(1353, 28);
             this.menuStrip1.TabIndex = 13;
             this.menuStrip1.Text = "menuStrip1";
-            // 
-            // файлToolStripMenuItem
-            // 
+
             this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.создатьToolStripMenuItem,
             this.открытьToolStripMenuItem,
             this.сохранитьToolStripMenuItem,
             this.сохранитьКакToolStripMenuItem,
+            this.настройкиToolStripMenuItem,
             this.выходToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             this.файлToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
             this.файлToolStripMenuItem.Text = "Файл";
-            // 
-            // создатьToolStripMenuItem
-            // 
+
             this.создатьToolStripMenuItem.Name = "создатьToolStripMenuItem";
-            this.создатьToolStripMenuItem.Size = new System.Drawing.Size(192, 26);
+            this.создатьToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.создатьToolStripMenuItem.Size = new System.Drawing.Size(268, 26);
             this.создатьToolStripMenuItem.Text = "Создать";
-            // 
-            // открытьToolStripMenuItem
-            // 
+
             this.открытьToolStripMenuItem.Name = "открытьToolStripMenuItem";
-            this.открытьToolStripMenuItem.Size = new System.Drawing.Size(192, 26);
+            this.открытьToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.открытьToolStripMenuItem.Size = new System.Drawing.Size(268, 26);
             this.открытьToolStripMenuItem.Text = "Открыть";
-            // 
-            // сохранитьToolStripMenuItem
-            // 
+
             this.сохранитьToolStripMenuItem.Name = "сохранитьToolStripMenuItem";
-            this.сохранитьToolStripMenuItem.Size = new System.Drawing.Size(192, 26);
+            this.сохранитьToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.сохранитьToolStripMenuItem.Size = new System.Drawing.Size(268, 26);
             this.сохранитьToolStripMenuItem.Text = "Сохранить";
-            // 
-            // сохранитьКакToolStripMenuItem
-            // 
+
             this.сохранитьКакToolStripMenuItem.Name = "сохранитьКакToolStripMenuItem";
-            this.сохранитьКакToolStripMenuItem.Size = new System.Drawing.Size(192, 26);
+            this.сохранитьКакToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+            | System.Windows.Forms.Keys.S)));
+            this.сохранитьКакToolStripMenuItem.Size = new System.Drawing.Size(268, 26);
             this.сохранитьКакToolStripMenuItem.Text = "Сохранить как";
-            // 
-            // выходToolStripMenuItem
-            // 
+
+            this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
+            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(268, 26);
+            this.настройкиToolStripMenuItem.Text = "Настройки";
+
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            this.выходToolStripMenuItem.Size = new System.Drawing.Size(192, 26);
+            this.выходToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
+            this.выходToolStripMenuItem.Size = new System.Drawing.Size(268, 26);
             this.выходToolStripMenuItem.Text = "Выход";
-            // 
-            // правкаToolStripMenuItem
-            // 
+
             this.правкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.отменитьToolStripMenuItem,
             this.повторитьToolStripMenuItem,
@@ -224,45 +195,37 @@ namespace GUIshka
             this.правкаToolStripMenuItem.Name = "правкаToolStripMenuItem";
             this.правкаToolStripMenuItem.Size = new System.Drawing.Size(74, 24);
             this.правкаToolStripMenuItem.Text = "Правка";
-            // 
-            // отменитьToolStripMenuItem
-            // 
+
             this.отменитьToolStripMenuItem.Name = "отменитьToolStripMenuItem";
-            this.отменитьToolStripMenuItem.Size = new System.Drawing.Size(176, 26);
+            this.отменитьToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.отменитьToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             this.отменитьToolStripMenuItem.Text = "Отменить";
-            // 
-            // повторитьToolStripMenuItem
-            // 
+
             this.повторитьToolStripMenuItem.Name = "повторитьToolStripMenuItem";
-            this.повторитьToolStripMenuItem.Size = new System.Drawing.Size(176, 26);
+            this.повторитьToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
+            this.повторитьToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             this.повторитьToolStripMenuItem.Text = "Повторить";
-            // 
-            // вырезатьToolStripMenuItem
-            // 
+
             this.вырезатьToolStripMenuItem.Name = "вырезатьToolStripMenuItem";
-            this.вырезатьToolStripMenuItem.Size = new System.Drawing.Size(176, 26);
+            this.вырезатьToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
+            this.вырезатьToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             this.вырезатьToolStripMenuItem.Text = "Вырезать";
-            // 
-            // копироватьToolStripMenuItem
-            // 
+
             this.копироватьToolStripMenuItem.Name = "копироватьToolStripMenuItem";
-            this.копироватьToolStripMenuItem.Size = new System.Drawing.Size(176, 26);
+            this.копироватьToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.копироватьToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             this.копироватьToolStripMenuItem.Text = "Копировать";
-            // 
-            // вставитьToolStripMenuItem
-            // 
+
             this.вставитьToolStripMenuItem.Name = "вставитьToolStripMenuItem";
-            this.вставитьToolStripMenuItem.Size = new System.Drawing.Size(176, 26);
+            this.вставитьToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+            this.вставитьToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             this.вставитьToolStripMenuItem.Text = "Вставить";
-            // 
-            // удалитьToolStripMenuItem
-            // 
+
             this.удалитьToolStripMenuItem.Name = "удалитьToolStripMenuItem";
-            this.удалитьToolStripMenuItem.Size = new System.Drawing.Size(176, 26);
+            this.удалитьToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+            this.удалитьToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             this.удалитьToolStripMenuItem.Text = "Удалить";
-            // 
-            // текстToolStripMenuItem
-            // 
+
             this.текстToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.постановкаЗадачиToolStripMenuItem,
             this.грамматикаToolStripMenuItem,
@@ -274,78 +237,72 @@ namespace GUIshka
             this.текстToolStripMenuItem.Name = "текстToolStripMenuItem";
             this.текстToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
             this.текстToolStripMenuItem.Text = "Текст";
-            // 
-            // постановкаЗадачиToolStripMenuItem
-            // 
+
             this.постановкаЗадачиToolStripMenuItem.Name = "постановкаЗадачиToolStripMenuItem";
             this.постановкаЗадачиToolStripMenuItem.Size = new System.Drawing.Size(288, 26);
             this.постановкаЗадачиToolStripMenuItem.Text = "Постановка задачи";
-            // 
-            // грамматикаToolStripMenuItem
-            // 
+
             this.грамматикаToolStripMenuItem.Name = "грамматикаToolStripMenuItem";
             this.грамматикаToolStripMenuItem.Size = new System.Drawing.Size(288, 26);
             this.грамматикаToolStripMenuItem.Text = "Грамматика";
-            // 
-            // классификацияГрамматикиToolStripMenuItem
-            // 
+
             this.классификацияГрамматикиToolStripMenuItem.Name = "классификацияГрамматикиToolStripMenuItem";
             this.классификацияГрамматикиToolStripMenuItem.Size = new System.Drawing.Size(288, 26);
             this.классификацияГрамматикиToolStripMenuItem.Text = "Классификация грамматики";
-            // 
-            // методАнализаToolStripMenuItem
-            // 
+
             this.методАнализаToolStripMenuItem.Name = "методАнализаToolStripMenuItem";
             this.методАнализаToolStripMenuItem.Size = new System.Drawing.Size(288, 26);
             this.методАнализаToolStripMenuItem.Text = "Метод анализа";
-            // 
-            // тестовыйПримерToolStripMenuItem
-            // 
+
             this.тестовыйПримерToolStripMenuItem.Name = "тестовыйПримерToolStripMenuItem";
             this.тестовыйПримерToolStripMenuItem.Size = new System.Drawing.Size(288, 26);
             this.тестовыйПримерToolStripMenuItem.Text = "Тестовый пример";
-            // 
-            // списокЛитературыToolStripMenuItem
-            // 
+
             this.списокЛитературыToolStripMenuItem.Name = "списокЛитературыToolStripMenuItem";
             this.списокЛитературыToolStripMenuItem.Size = new System.Drawing.Size(288, 26);
             this.списокЛитературыToolStripMenuItem.Text = "Список литературы";
-            // 
-            // исходныйКодПрограммыToolStripMenuItem
-            // 
+
             this.исходныйКодПрограммыToolStripMenuItem.Name = "исходныйКодПрограммыToolStripMenuItem";
             this.исходныйКодПрограммыToolStripMenuItem.Size = new System.Drawing.Size(288, 26);
             this.исходныйКодПрограммыToolStripMenuItem.Text = "Исходный код программы";
-            // 
-            // пускToolStripMenuItem
-            // 
+
             this.пускToolStripMenuItem.Name = "пускToolStripMenuItem";
+            this.пускToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
             this.пускToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
             this.пускToolStripMenuItem.Text = "Пуск";
-            // 
-            // справкаToolStripMenuItem
-            // 
+
             this.справкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.вызовСправкиToolStripMenuItem,
+            this.языкToolStripMenuItem,
             this.оПрограммеToolStripMenuItem});
             this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
             this.справкаToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
             this.справкаToolStripMenuItem.Text = "Справка";
-            // 
-            // вызовСправкиToolStripMenuItem
-            // 
+
             this.вызовСправкиToolStripMenuItem.Name = "вызовСправкиToolStripMenuItem";
-            this.вызовСправкиToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
+            this.вызовСправкиToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.вызовСправкиToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.вызовСправкиToolStripMenuItem.Text = "Вызов справки";
-            // 
-            // оПрограммеToolStripMenuItem
-            // 
+
+            this.языкToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.русскийToolStripMenuItem,
+            this.englishToolStripMenuItem});
+            this.языкToolStripMenuItem.Name = "языкToolStripMenuItem";
+            this.языкToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.языкToolStripMenuItem.Text = "Язык / Language";
+
+            this.русскийToolStripMenuItem.Name = "русскийToolStripMenuItem";
+            this.русскийToolStripMenuItem.Size = new System.Drawing.Size(150, 26);
+            this.русскийToolStripMenuItem.Text = "Русский";
+
+            this.englishToolStripMenuItem.Name = "englishToolStripMenuItem";
+            this.englishToolStripMenuItem.Size = new System.Drawing.Size(150, 26);
+            this.englishToolStripMenuItem.Text = "English";
+
             this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
-            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
+            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.оПрограммеToolStripMenuItem.Text = "О программе";
-            // 
-            // toolStripPanel
-            // 
+
             this.toolStripPanel.AutoSize = true;
             this.toolStripPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.toolStripPanel.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -358,6 +315,7 @@ namespace GUIshka
             this.toolStripPanel.Controls.Add(this.CutButton);
             this.toolStripPanel.Controls.Add(this.InputButton);
             this.toolStripPanel.Controls.Add(this.AnalisButton);
+            this.toolStripPanel.Controls.Add(this.AnalisExprButton);
             this.toolStripPanel.Controls.Add(this.RefButton);
             this.toolStripPanel.Controls.Add(this.button1);
             this.toolStripPanel.Dock = System.Windows.Forms.DockStyle.Top;
@@ -367,9 +325,7 @@ namespace GUIshka
             this.toolStripPanel.Padding = new System.Windows.Forms.Padding(13, 6, 13, 6);
             this.toolStripPanel.Size = new System.Drawing.Size(1353, 88);
             this.toolStripPanel.TabIndex = 14;
-            // 
-            // CreateButton
-            // 
+
             this.CreateButton.AutoSize = true;
             this.CreateButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.CreateButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("CreateButton.BackgroundImage")));
@@ -381,9 +337,7 @@ namespace GUIshka
             this.CreateButton.Size = new System.Drawing.Size(73, 68);
             this.CreateButton.TabIndex = 0;
             this.CreateButton.UseVisualStyleBackColor = true;
-            // 
-            // OpenButton
-            // 
+
             this.OpenButton.AutoSize = true;
             this.OpenButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.OpenButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("OpenButton.BackgroundImage")));
@@ -395,9 +349,7 @@ namespace GUIshka
             this.OpenButton.Size = new System.Drawing.Size(73, 68);
             this.OpenButton.TabIndex = 1;
             this.OpenButton.UseVisualStyleBackColor = true;
-            // 
-            // SaveButton
-            // 
+
             this.SaveButton.AutoSize = true;
             this.SaveButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.SaveButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("SaveButton.BackgroundImage")));
@@ -409,9 +361,7 @@ namespace GUIshka
             this.SaveButton.Size = new System.Drawing.Size(73, 68);
             this.SaveButton.TabIndex = 2;
             this.SaveButton.UseVisualStyleBackColor = true;
-            // 
-            // BackButton
-            // 
+
             this.BackButton.AutoSize = true;
             this.BackButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BackButton.BackgroundImage")));
@@ -423,9 +373,7 @@ namespace GUIshka
             this.BackButton.Size = new System.Drawing.Size(73, 68);
             this.BackButton.TabIndex = 3;
             this.BackButton.UseVisualStyleBackColor = true;
-            // 
-            // ForwardButton
-            // 
+
             this.ForwardButton.AutoSize = true;
             this.ForwardButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ForwardButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ForwardButton.BackgroundImage")));
@@ -437,9 +385,7 @@ namespace GUIshka
             this.ForwardButton.Size = new System.Drawing.Size(73, 68);
             this.ForwardButton.TabIndex = 4;
             this.ForwardButton.UseVisualStyleBackColor = true;
-            // 
-            // CopyButton
-            // 
+
             this.CopyButton.AutoSize = true;
             this.CopyButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.CopyButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("CopyButton.BackgroundImage")));
@@ -451,9 +397,7 @@ namespace GUIshka
             this.CopyButton.Size = new System.Drawing.Size(73, 68);
             this.CopyButton.TabIndex = 5;
             this.CopyButton.UseVisualStyleBackColor = true;
-            // 
-            // CutButton
-            // 
+
             this.CutButton.AutoSize = true;
             this.CutButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.CutButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("CutButton.BackgroundImage")));
@@ -465,9 +409,7 @@ namespace GUIshka
             this.CutButton.Size = new System.Drawing.Size(73, 68);
             this.CutButton.TabIndex = 6;
             this.CutButton.UseVisualStyleBackColor = true;
-            // 
-            // InputButton
-            // 
+
             this.InputButton.AutoSize = true;
             this.InputButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.InputButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("InputButton.BackgroundImage")));
@@ -479,9 +421,7 @@ namespace GUIshka
             this.InputButton.Size = new System.Drawing.Size(73, 68);
             this.InputButton.TabIndex = 7;
             this.InputButton.UseVisualStyleBackColor = true;
-            // 
-            // AnalisButton
-            // 
+
             this.AnalisButton.AutoSize = true;
             this.AnalisButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.AnalisButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("AnalisButton.BackgroundImage")));
@@ -493,73 +433,76 @@ namespace GUIshka
             this.AnalisButton.Size = new System.Drawing.Size(73, 68);
             this.AnalisButton.TabIndex = 8;
             this.AnalisButton.UseVisualStyleBackColor = true;
-            // 
-            // RefButton
-            // 
+            this.AnalisButton.Text = "Анализ";
+            this.AnalisButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+
+            this.AnalisExprButton.AutoSize = true;
+            this.AnalisExprButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.AnalisExprButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("AnalisButton.BackgroundImage")));
+            this.AnalisExprButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.AnalisExprButton.Location = new System.Drawing.Point(746, 10);
+            this.AnalisExprButton.Margin = new System.Windows.Forms.Padding(4);
+            this.AnalisExprButton.MinimumSize = new System.Drawing.Size(73, 68);
+            this.AnalisExprButton.Name = "AnalisExprButton";
+            this.AnalisExprButton.Size = new System.Drawing.Size(73, 68);
+            this.AnalisExprButton.TabIndex = 11;
+            this.AnalisExprButton.UseVisualStyleBackColor = true;
+            this.AnalisExprButton.Text = "Арифметика";
+            this.AnalisExprButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+
             this.RefButton.AutoSize = true;
             this.RefButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.RefButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("RefButton.BackgroundImage")));
             this.RefButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.RefButton.Location = new System.Drawing.Point(746, 10);
+            this.RefButton.Location = new System.Drawing.Point(827, 10);
             this.RefButton.Margin = new System.Windows.Forms.Padding(4);
             this.RefButton.MinimumSize = new System.Drawing.Size(73, 68);
             this.RefButton.Name = "RefButton";
             this.RefButton.Size = new System.Drawing.Size(73, 68);
             this.RefButton.TabIndex = 9;
             this.RefButton.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
+
             this.button1.AutoSize = true;
             this.button1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
             this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button1.Location = new System.Drawing.Point(827, 10);
+            this.button1.Location = new System.Drawing.Point(908, 10);
             this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.MinimumSize = new System.Drawing.Size(73, 68);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(73, 68);
             this.button1.TabIndex = 10;
             this.button1.UseVisualStyleBackColor = true;
-            // 
-            // MainForm
-            // 
+
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1353, 624);
-            this.Controls.Add(this.richTextBox1);
-            this.Controls.Add(this.tabControlMain);
             this.Controls.Add(this.toolStripPanel);
             this.Controls.Add(this.menuStrip1);
+            this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(1061, 481);
             this.Name = "MainForm";
             this.Text = "Компилятор";
+            this.AllowDrop = true;
+
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.tabControlMain.ResumeLayout(false);
             this.tabPageErrors.ResumeLayout(false);
             this.tabPageAst.ResumeLayout(false);
-            this.tabControlMain.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolStripPanel.ResumeLayout(false);
             this.toolStripPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
-        #endregion
-
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.TabControl tabControlMain;
-        private System.Windows.Forms.TabPage tabPageErrors;
-        private System.Windows.Forms.TabPage tabPageAst;
         private System.Windows.Forms.RichTextBox richTextBoxAst;
-        private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.FlowLayoutPanel toolStripPanel;
-
         private System.Windows.Forms.Button CreateButton;
         private System.Windows.Forms.Button OpenButton;
         private System.Windows.Forms.Button SaveButton;
@@ -569,14 +512,19 @@ namespace GUIshka
         private System.Windows.Forms.Button CutButton;
         private System.Windows.Forms.Button InputButton;
         private System.Windows.Forms.Button AnalisButton;
+        private System.Windows.Forms.Button AnalisExprButton;
         private System.Windows.Forms.Button RefButton;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TabControl tabControlMain;
+        private System.Windows.Forms.TabPage tabPageErrors;
+        private System.Windows.Forms.TabPage tabPageAst;
 
         private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem создатьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem открытьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сохранитьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сохранитьКакToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem настройкиToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem правкаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem отменитьToolStripMenuItem;
@@ -597,6 +545,8 @@ namespace GUIshka
         private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem вызовСправкиToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem языкToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem русскийToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem englishToolStripMenuItem;
     }
 }
-
