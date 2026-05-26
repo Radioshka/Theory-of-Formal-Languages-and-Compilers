@@ -781,7 +781,7 @@ a + b * c
 **Схема рекурсивного спуска для парсера**
 
 <p align="center">
-    <img width="211" height="281" alt="схема парсера" src="https://github.com/user-attachments/assets/9be56725-7fa1-4ed4-b904-03b0507a5ee1" />
+    <img width="181" height="214" alt="другая версия схенмы парсера" src="https://github.com/user-attachments/assets/b919972b-1a5f-4159-8cd1-1324a2c6df1b" />
 </p>
 
 **Скриншоты работы программы**
